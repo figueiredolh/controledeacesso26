@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ControleDeAcesso26.Exceptions\ControleDeAcesso26.Exceptions.csproj" />
     <ProjectReference Include="..\..\Shared\ControleDeAcesso26.Communication\ControleDeAcesso26.Communication.csproj" />
+    <ProjectReference Include="..\..\Shared\ControleDeAcesso26.Exceptions\ControleDeAcesso26.Exceptions.csproj" />
     <ProjectReference Include="..\ControleDeAcesso26.Application\ControleDeAcesso26.Application.csproj" />
     <ProjectReference Include="..\ControleDeAcesso26.Infrastructure\ControleDeAcesso26.Infrastructure.csproj" />
   </ItemGroup>
