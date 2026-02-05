@@ -62,7 +62,7 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a O Apelido já existe.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O apelido já existe.
         /// </summary>
         public static string USUARIO_APELIDO_JA_EXISTE {
             get {
@@ -71,7 +71,7 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a O Apelido do Usuário não pode estar vazio.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O apelido do usuário não pode estar vazio.
         /// </summary>
         public static string USUARIO_APELIDO_VAZIO {
             get {
@@ -80,7 +80,7 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a O nome do Usuário não pode estar vazio.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O nome do usuário não pode estar vazio.
         /// </summary>
         public static string USUARIO_NOME_VAZIO {
             get {

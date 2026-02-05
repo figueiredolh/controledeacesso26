@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="USUARIO_APELIDO_JA_EXISTE" xml:space="preserve">
-    <value>O Apelido já existe</value>
+    <value>O apelido já existe</value>
   </data>
   <data name="USUARIO_APELIDO_VAZIO" xml:space="preserve">
-    <value>O Apelido do Usuário não pode estar vazio</value>
+    <value>O apelido do usuário não pode estar vazio</value>
   </data>
   <data name="USUARIO_NOME_VAZIO" xml:space="preserve">
-    <value>O nome do Usuário não pode estar vazio</value>
+    <value>O nome do usuário não pode estar vazio</value>
   </data>
 </root>
