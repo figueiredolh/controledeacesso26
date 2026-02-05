@@ -1,3 +1,4 @@
+using ControleDeAcesso26.API.Filters;
 using ControleDeAcesso26.Application.DependencyInjection;
 using ControleDeAcesso26.Infrastructure.DependencyInjection;
 using ControleDeAcesso26.Infrastructure.Migrations;
@@ -7,7 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ExceptionsFilter>();
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
