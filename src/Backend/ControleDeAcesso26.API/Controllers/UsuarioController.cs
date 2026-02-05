@@ -2,6 +2,7 @@
 using ControleDeAcesso26.Application.UseCases.UsuarioUseCases.Interfaces;
 using ControleDeAcesso26.Communication.Requests.RequestsUsuario;
 using ControleDeAcesso26.Communication.Responses.ResponsesUsuario;
+using ControleDeAcesso26.Exceptions.Exceptions.ResponseError;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeAcesso26.API.Controllers
@@ -19,6 +20,7 @@ namespace ControleDeAcesso26.API.Controllers
 
         [HttpPost(nameof(CriarUsuario))]
         [ProducesResponseType(typeof(ResponseCriarUsuarioJson), StatusCodes.Status201Created)]
+        [ProducesErrorResponseType(typeof(ResponseErrorJson))]
         public async Task<IActionResult> CriarUsuario([FromServices] ICriarUsuarioUseCase criaUsuarioUseCase, 
                                          [FromBody] RequestCriarUsuarioJson requestCriaUsuario)
         {
