@@ -62,6 +62,15 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Erro desconhecido.
+        /// </summary>
+        public static string ERRO_DESCONHECIDO {
+            get {
+                return ResourceManager.GetString("ERRO_DESCONHECIDO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a O apelido já existe.
         /// </summary>
         public static string USUARIO_APELIDO_JA_EXISTE {

@@ -7,5 +7,12 @@
         {
             ErrorMessages = errorMessages;
         }
+        public ResponseErrorJson(string errorMessage)
+        {
+            ErrorMessages = new List<string>()
+            {
+                errorMessage
+            };
+        }
     }
 }
