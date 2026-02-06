@@ -34,6 +34,24 @@ namespace Validators.Test
         }
 
         [Fact]
+        public void FailureOnNomeAndApelidoNullProperty()
+        {
+            var request = RequestCriarUsuarioJsonBuilder.Build();
+            request.Nome = null!;
+            request.Apelido = null!;
+
+            var validator = new RequestCriarUsuarioValidator();
+            var validationResult = validator.Validate(request);
+
+            validationResult.IsValid.ShouldBeFalse();
+            validationResult.Errors.Count.ShouldBe(2);
+            var listErrorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
+
+            listErrorMessages.ShouldContain(ValidatorsRulesResourceMessages.USUARIO_NOME_VAZIO);
+            listErrorMessages.ShouldContain(ValidatorsRulesResourceMessages.USUARIO_APELIDO_VAZIO);
+        }
+
+        [Fact]
         public void FailureOnApelidoEmptyProperty()
         {
             var request = RequestCriarUsuarioJsonBuilder.Build();
