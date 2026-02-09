@@ -4,9 +4,10 @@ namespace ControleDeAcesso26.Communication.Responses.ResponsesUsuario
 {
     public class ResponseRecuperarUsuariosJson
     {
-        public string Nome { get; set; } = string.Empty;
-        public string Apelido { get; set; } = string.Empty;
-        public DateTime DataCriacao { get; set; }
-        public bool Ativo { get; set; }
+        public long Id { get; init; }
+        public string Nome { get; init; } = string.Empty;
+        public string Apelido { get; init; } = string.Empty;
+        public DateTime DataCriacao { get; init; }
+        public bool Ativo { get; init; }
     }
 }
