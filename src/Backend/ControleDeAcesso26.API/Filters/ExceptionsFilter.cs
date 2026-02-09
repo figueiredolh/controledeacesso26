@@ -23,10 +23,15 @@ namespace ControleDeAcesso26.API.Filters
 
         private static void HandleControleDeAcesso26Exception(ExceptionContext context)
         {
-            if (context.Exception is ErrorOnValidationException exception)
+            if (context.Exception is ErrorOnValidationException errorOnValidationException)
             {
-                context.Result = new BadRequestObjectResult(new ResponseErrorJson(exception.ErrorMessages));
+                context.Result = new BadRequestObjectResult(new ResponseErrorJson(errorOnValidationException.ErrorMessages));
                 context.ExceptionHandled = true;
+            }
+
+            if (context.Exception is NotFoundException notFoundException)
+            {
+                context.Result = new NotFoundObjectResult(new ResponseErrorJson(notFoundException.ErrorMessage));
             }
         }
 
