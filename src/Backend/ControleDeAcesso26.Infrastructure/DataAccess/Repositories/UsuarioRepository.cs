@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ControleDeAcesso26.Infrastructure.DataAccess.Repositories
 {
-    public class UsuarioRepository : IUsuarioReadOnlyRepository, IUsuarioWriteRepository
+    public class UsuarioRepository : IUsuarioReadOnlyRepository, IUsuarioWriteRepository, IUsuarioUpdateRepository
     {
         private readonly ControleDeAcesso26DbContext dbContext;
         public UsuarioRepository(ControleDeAcesso26DbContext _dbContext)
@@ -25,14 +25,25 @@ namespace ControleDeAcesso26.Infrastructure.DataAccess.Repositories
             return await IQueryableUsuarios.ToListAsync();
         }
 
-        public async Task CriarUsuario(Usuario usuario)
+        public async Task<Usuario?> RecuperarUsuarioPorId(long id)
         {
-            await dbContext.Usuarios.AddAsync(usuario);
+            var usuario = await dbContext.Usuarios.FirstOrDefaultAsync(usuario => usuario.Id == id && usuario.Ativo);
+            return usuario;
         }
 
         public async Task<bool> ApelidoJaExisteNoSistema(string apelido)
         {
             return await dbContext.Usuarios.AsNoTracking().AnyAsync(usuario => usuario.Apelido.Equals(apelido));
+        }
+
+        public async Task CriarUsuario(Usuario usuario)
+        {
+            await dbContext.Usuarios.AddAsync(usuario);
+        }
+
+        public void AtualizarUsuario(Usuario usuario)
+        {
+            dbContext.Usuarios.Update(usuario);
         }
     }
 }

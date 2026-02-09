@@ -10,7 +10,7 @@ namespace ControleDeAcesso26.Infrastructure.DependencyInjection.AddDIEntityRepos
         {
             services.AddScoped<IUsuarioReadOnlyRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioWriteRepository, UsuarioRepository>();
-            //services.AddScoped<IUsuarioUpdateRepository, UsuarioRepository>();
+            services.AddScoped<IUsuarioUpdateRepository, UsuarioRepository>();
         }
     }
 }
