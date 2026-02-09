@@ -89,6 +89,51 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sem alterações. Para atualizar, você deve preencher ao menos um nome ou apelido.
+        /// </summary>
+        public static string USUARIO_FALHA_ATUALIZAR {
+            get {
+                return ResourceManager.GetString("USUARIO_FALHA_ATUALIZAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sem alterações. Para atualizar, você deve preencher ao menos um nome ou apelido diferente.
+        /// </summary>
+        public static string USUARIO_FALHA_ATUALIZAR_2 {
+            get {
+                return ResourceManager.GetString("USUARIO_FALHA_ATUALIZAR_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sem alterações. Para atualizar, você deve preencher ao menos um apelido diferente.
+        /// </summary>
+        public static string USUARIO_FALHA_ATUALIZAR_3 {
+            get {
+                return ResourceManager.GetString("USUARIO_FALHA_ATUALIZAR_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sem alterações. Para atualizar, você deve preencher ao menos um nome diferente.
+        /// </summary>
+        public static string USUARIO_FALHA_ATUALIZAR_4 {
+            get {
+                return ResourceManager.GetString("USUARIO_FALHA_ATUALIZAR_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário não encontrado.
+        /// </summary>
+        public static string USUARIO_NAO_ENCONTRADO {
+            get {
+                return ResourceManager.GetString("USUARIO_NAO_ENCONTRADO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a O nome do usuário não pode estar vazio.
         /// </summary>
         public static string USUARIO_NOME_VAZIO {
