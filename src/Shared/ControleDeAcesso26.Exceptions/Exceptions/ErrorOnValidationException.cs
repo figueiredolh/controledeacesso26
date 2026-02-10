@@ -9,5 +9,12 @@ namespace ControleDeAcesso26.Exceptions.Exceptions
         {
             ErrorMessages = errorMessages;
         }
+        public ErrorOnValidationException(string errorMessage)
+        {
+            ErrorMessages = new List<string>
+            {
+                errorMessage
+            };
+        }
     }
 }
