@@ -37,5 +37,15 @@ namespace ControleDeAcesso26.API.Controllers
             var usuarioUpdateResult = await atualizarUsuarioUseCase.Execute(id, requestAtualizarUsuario);
             return Ok(usuarioUpdateResult);
         }
+
+        [HttpPatch("reativar/{id}")]
+        [ProducesResponseType(typeof(ResponseAtualizarReativarUsuarioJson), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ResponseErrorJson))]
+        public async Task<IActionResult> AtualizarReativarUsuario(long id, [FromServices] IAtualizarReativarUsuarioUseCase atualizarReativarUsuarioUseCase,
+                                                         [FromBody] RequestAtualizarReativarUsuarioJson requestAtualizarReativarUsuario)
+        {
+            var usuarioUpdateResult = await atualizarReativarUsuarioUseCase.Execute(id, requestAtualizarReativarUsuario);
+            return Ok(usuarioUpdateResult);
+        }
     }
 }
