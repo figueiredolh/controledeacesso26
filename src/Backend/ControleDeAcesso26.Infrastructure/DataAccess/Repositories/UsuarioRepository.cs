@@ -25,9 +25,9 @@ namespace ControleDeAcesso26.Infrastructure.DataAccess.Repositories
             return await IQueryableUsuarios.ToListAsync();
         }
 
-        public async Task<Usuario?> RecuperarUsuarioPorId(long id)
+        public async Task<Usuario?> RecuperarUsuarioPorId(long id, bool usuarioAtivo = true)
         {
-            var usuario = await dbContext.Usuarios.FirstOrDefaultAsync(usuario => usuario.Id == id && usuario.Ativo);
+            var usuario = await dbContext.Usuarios.FirstOrDefaultAsync(usuario => usuario.Id == id && usuario.Ativo == usuarioAtivo);
             return usuario;
         }
 
