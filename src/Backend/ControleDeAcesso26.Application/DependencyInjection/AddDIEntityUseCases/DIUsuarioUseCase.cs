@@ -11,6 +11,7 @@ namespace ControleDeAcesso26.Application.DependencyInjection.AddDIEntityUseCases
             services.AddScoped<ICriarUsuarioUseCase, CriarUsuarioUseCase>();
             services.AddScoped<IRecuperarUsuariosUseCase, RecuperarUsuariosUseCase>();
             services.AddScoped<IAtualizarUsuarioUseCase, AtualizarUsuarioUseCase>();
+            services.AddScoped<IAtualizarReativarUsuarioUseCase, AtualizarReativarUsuarioUseCase>();
         }
     }
 }
