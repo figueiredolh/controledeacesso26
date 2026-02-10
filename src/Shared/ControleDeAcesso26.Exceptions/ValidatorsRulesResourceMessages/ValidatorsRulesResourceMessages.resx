@@ -120,6 +120,9 @@
   <data name="ERRO_DESCONHECIDO" xml:space="preserve">
     <value>Erro desconhecido</value>
   </data>
+  <data name="SEM_ALTERACOES_FALHA" xml:space="preserve">
+    <value>Sem alterações. Falha na requisição</value>
+  </data>
   <data name="USUARIO_APELIDO_JA_EXISTE" xml:space="preserve">
     <value>O apelido já existe</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="USUARIO_NAO_ENCONTRADO" xml:space="preserve">
     <value>Usuário não encontrado</value>
+  </data>
+  <data name="USUARIO_NAO_ENCONTRADO_OU_ATIVO" xml:space="preserve">
+    <value>Usuário não encontrado ou já ativo</value>
   </data>
   <data name="USUARIO_NOME_VAZIO" xml:space="preserve">
     <value>O nome do usuário não pode estar vazio</value>

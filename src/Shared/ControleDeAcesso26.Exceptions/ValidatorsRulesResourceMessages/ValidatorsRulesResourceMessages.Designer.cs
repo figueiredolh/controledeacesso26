@@ -71,6 +71,15 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sem alterações. Falha na requisição.
+        /// </summary>
+        public static string SEM_ALTERACOES_FALHA {
+            get {
+                return ResourceManager.GetString("SEM_ALTERACOES_FALHA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a O apelido já existe.
         /// </summary>
         public static string USUARIO_APELIDO_JA_EXISTE {
@@ -130,6 +139,15 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         public static string USUARIO_NAO_ENCONTRADO {
             get {
                 return ResourceManager.GetString("USUARIO_NAO_ENCONTRADO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário não encontrado ou já ativo.
+        /// </summary>
+        public static string USUARIO_NAO_ENCONTRADO_OU_ATIVO {
+            get {
+                return ResourceManager.GetString("USUARIO_NAO_ENCONTRADO_OU_ATIVO", resourceCulture);
             }
         }
         
