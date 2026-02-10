@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ControleDeAcesso26.Infrastructure.DataAccess.Repositories
 {
-    public class UsuarioRepository : IUsuarioReadOnlyRepository, IUsuarioWriteRepository, IUsuarioUpdateRepository
+    public class UsuarioRepository : IUsuarioReadOnlyRepository, IUsuarioWriteRepository, IUsuarioUpdateRepository, IUsuarioDeleteRepository
     {
         private readonly ControleDeAcesso26DbContext dbContext;
         public UsuarioRepository(ControleDeAcesso26DbContext _dbContext)
