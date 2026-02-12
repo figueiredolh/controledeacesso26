@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using ControleDeAcesso26.Communication.Requests.RequestsUsuario;
 
-namespace TestUtilities.Builders.Requests
+namespace TestUtilities.Builders.Requests.UsuarioRequests
 {
     public static class RequestCriarUsuarioJsonBuilder
     {

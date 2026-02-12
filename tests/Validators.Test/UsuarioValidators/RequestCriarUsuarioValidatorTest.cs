@@ -1,9 +1,9 @@
 ﻿using ControleDeAcesso26.Application.UseCases.UsuarioUseCases.Validators;
 using ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages;
 using Shouldly;
-using TestUtilities.Builders.Requests;
+using TestUtilities.Builders.Requests.UsuarioRequests;
 
-namespace Validators.Test
+namespace Validators.Test.UsuarioValidators
 {
     public class RequestCriarUsuarioValidatorTest
     {
