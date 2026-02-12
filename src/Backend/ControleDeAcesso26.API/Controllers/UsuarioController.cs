@@ -51,11 +51,20 @@ namespace ControleDeAcesso26.API.Controllers
         [HttpPatch("{id}/excluir")]
         [ProducesResponseType(typeof(ResponseExcluirUsuarioJson), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ResponseErrorJson))]
-        public async Task<IActionResult> ExcluirUsuario(long id, [FromServices] IExcluirUsuarioUseCase atualizarReativarUsuarioUseCase,
-                                                         [FromBody] RequestExcluirUsuarioJson requestAtualizarReativarUsuario)
+        public async Task<IActionResult> ExcluirUsuario(long id, [FromServices] IExcluirUsuarioUseCase excluirUsuarioUseCase,
+                                                         [FromBody] RequestExcluirUsuarioJson requestExcluirUsuario)
         {
-            var usuarioUpdateResult = await atualizarReativarUsuarioUseCase.Execute(id, requestAtualizarReativarUsuario);
-            return Ok(usuarioUpdateResult);
+            var usuarioDeleteResult = await excluirUsuarioUseCase.Execute(id, requestExcluirUsuario);
+            return Ok(usuarioDeleteResult);
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseExcluirUsuarioDefinitivamenteJson), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ResponseErrorJson))]
+        public async Task<IActionResult> ExcluirUsuarioDefinitivamente(long id, [FromServices] IExcluirUsuarioDefinitivamenteUseCase excluirDefUsuarioUseCase)
+        {
+            var usuarioDeleteResult = await excluirDefUsuarioUseCase.Execute(id);
+            return Ok(usuarioDeleteResult);
         }
     }
 }
