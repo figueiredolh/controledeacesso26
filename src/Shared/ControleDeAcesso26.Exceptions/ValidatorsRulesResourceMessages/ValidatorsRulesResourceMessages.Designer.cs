@@ -143,7 +143,7 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário não encontrado ou já ativo.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário não encontrado ou ativo.
         /// </summary>
         public static string USUARIO_NAO_ENCONTRADO_OU_ATIVO {
             get {

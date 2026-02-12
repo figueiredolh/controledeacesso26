@@ -145,7 +145,7 @@
     <value>Usuário não encontrado</value>
   </data>
   <data name="USUARIO_NAO_ENCONTRADO_OU_ATIVO" xml:space="preserve">
-    <value>Usuário não encontrado ou já ativo</value>
+    <value>Usuário não encontrado ou ativo</value>
   </data>
   <data name="USUARIO_NOME_VAZIO" xml:space="preserve">
     <value>O nome do usuário não pode estar vazio</value>
