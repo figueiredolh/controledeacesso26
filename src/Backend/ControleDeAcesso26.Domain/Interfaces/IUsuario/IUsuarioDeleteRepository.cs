@@ -5,5 +5,6 @@ namespace ControleDeAcesso26.Domain.Interfaces.IUsuario
     public interface IUsuarioDeleteRepository
     {
         public void AtualizarUsuario(Usuario usuario);
+        public Task ExcluirUsuarioDefinitivamente(long id);
     }
 }
