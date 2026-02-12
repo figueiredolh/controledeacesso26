@@ -13,15 +13,15 @@ namespace ControleDeAcesso26.Application.UseCases.UsuarioUseCases
     public class ExcluirUsuarioUseCase : IExcluirUsuarioUseCase
     {
         private readonly IUsuarioReadOnlyRepository _usuarioReadOnlyRepository;
-        private readonly IUsuarioUpdateRepository _usuarioUpdateRepository;
+        private readonly IUsuarioDeleteRepository _usuarioUpdateRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public ExcluirUsuarioUseCase(IUsuarioReadOnlyRepository usuarioReadOnlyRepository,
-                                       IUsuarioUpdateRepository usuarioUpdateRepository,
+                                       IUsuarioDeleteRepository usuarioDeleteRepository,
                                        IUnitOfWork unitOfWork)
         {
             _usuarioReadOnlyRepository = usuarioReadOnlyRepository;
-            _usuarioUpdateRepository = usuarioUpdateRepository;
+            _usuarioUpdateRepository = usuarioDeleteRepository;
             _unitOfWork = unitOfWork;
         }
         public async Task<ResponseExcluirUsuarioJson> Execute(long id, RequestExcluirUsuarioJson request)
@@ -38,8 +38,8 @@ namespace ControleDeAcesso26.Application.UseCases.UsuarioUseCases
             _usuarioUpdateRepository.AtualizarUsuario(usuarioBD);
             await _unitOfWork.SalvarMudancas();
 
-            var usuarioUpdateResponse = usuarioBD.Adapt<ResponseExcluirUsuarioJson>();
-            return usuarioUpdateResponse;
+            var usuarioDeleteResponse = usuarioBD.Adapt<ResponseExcluirUsuarioJson>();
+            return usuarioDeleteResponse;
         }
 
         private static void ValidateRequest(RequestExcluirUsuarioJson request)
