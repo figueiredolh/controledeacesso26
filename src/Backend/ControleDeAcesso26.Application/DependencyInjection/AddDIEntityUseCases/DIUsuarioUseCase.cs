@@ -13,6 +13,7 @@ namespace ControleDeAcesso26.Application.DependencyInjection.AddDIEntityUseCases
             services.AddScoped<IAtualizarUsuarioUseCase, AtualizarUsuarioUseCase>();
             services.AddScoped<IAtualizarReativarUsuarioUseCase, AtualizarReativarUsuarioUseCase>();
             services.AddScoped<IExcluirUsuarioUseCase, ExcluirUsuarioUseCase>();
+            services.AddScoped<IExcluirUsuarioDefinitivamenteUseCase, ExcluirUsuarioDefinitivamenteUseCase>();
         }
     }
 }
