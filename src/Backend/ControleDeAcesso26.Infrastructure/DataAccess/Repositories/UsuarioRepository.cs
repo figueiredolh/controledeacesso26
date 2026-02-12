@@ -25,10 +25,16 @@ namespace ControleDeAcesso26.Infrastructure.DataAccess.Repositories
             return await IQueryableUsuarios.ToListAsync();
         }
 
-        public async Task<Usuario?> RecuperarUsuarioPorId(long id, bool usuarioAtivo = true)
+        public async Task<Usuario?> RecuperarUsuarioPorId(long id, bool usuarioAtivo = true, bool asNoTracking = false)
         {
-            var usuario = await dbContext.Usuarios.FirstOrDefaultAsync(usuario => usuario.Id == id && usuario.Ativo == usuarioAtivo);
-            return usuario;
+            var usuarioDbSet = dbContext.Usuarios;
+
+            if (asNoTracking)
+            {
+                return await usuarioDbSet.AsNoTracking().FirstOrDefaultAsync(usuario => usuario.Id == id && usuario.Ativo == usuarioAtivo);
+            }
+
+            return await usuarioDbSet.FirstOrDefaultAsync(usuario => usuario.Id == id && usuario.Ativo == usuarioAtivo);
         }
 
         public async Task<bool> ApelidoJaExisteNoSistema(string apelido)
@@ -44,6 +50,11 @@ namespace ControleDeAcesso26.Infrastructure.DataAccess.Repositories
         public void AtualizarUsuario(Usuario usuario)
         {
             dbContext.Usuarios.Update(usuario);
+        }
+
+        public async Task ExcluirUsuarioDefinitivamente(long id)
+        {
+            await dbContext.Usuarios.Where(usuario => usuario.Id == id).ExecuteDeleteAsync();
         }
     }
 }
