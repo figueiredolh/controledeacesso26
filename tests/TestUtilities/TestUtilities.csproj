@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Backend\ControleDeAcesso26.Domain\ControleDeAcesso26.Domain.csproj" />
     <ProjectReference Include="..\..\src\Shared\ControleDeAcesso26.Communication\ControleDeAcesso26.Communication.csproj" />
   </ItemGroup>
 
