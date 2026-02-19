@@ -1,6 +1,14 @@
-@ControleDeAcesso26.API_HostAddress = http://localhost:5288
+﻿@ControleDeAcesso26.API_HostAddress = https://localhost:7186
 
-GET {{ControleDeAcesso26.API_HostAddress}}/weatherforecast/
-Accept: application/json
+GET {{ControleDeAcesso26.API_HostAddress}}/usuario/RecuperarUsuarios
+
+###
+
+POST {{ControleDeAcesso26.API_HostAddress}}/usuario/CriarUsuario
+Content-Type: application/json
+
+{
+  //RequestCriarUsuarioJson
+}
 
 ###
