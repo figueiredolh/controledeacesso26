@@ -2,7 +2,6 @@
 using MQTTnet;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace ControleDeAcesso26.Infrastructure.Messaging.MQTT
 {

@@ -1,4 +1,5 @@
 using ControleDeAcesso26.API.Filters;
+using ControleDeAcesso26.API.MQTT;
 using ControleDeAcesso26.Application.DependencyInjection;
 using ControleDeAcesso26.Infrastructure.DependencyInjection;
 using ControleDeAcesso26.Infrastructure.Migrations;
@@ -18,6 +19,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddInfrastructureLayer(builder.Configuration);
 builder.Services.AddApplicationLayer();
+builder.Services.AddHostedService<MqttInitializer>();
 
 var app = builder.Build();
 

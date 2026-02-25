@@ -52,9 +52,7 @@ namespace ControleDeAcesso26.Infrastructure.DependencyInjection
             });
 
             services.AddScoped(typeof(IMqttHandler<>), typeof(MqttMessageHandler<>));
-
-            //MqttInitializer
-            services.AddHostedService<MqttInitializer>();
+            services.AddScoped(typeof(IMqttPublisher<>), typeof(MqttMessagePublisher<>));
         }
 
         private static void AddRepositories(IServiceCollection services)
