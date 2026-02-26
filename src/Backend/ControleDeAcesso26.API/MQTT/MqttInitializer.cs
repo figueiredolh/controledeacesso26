@@ -1,11 +1,7 @@
-﻿using ControleDeAcesso26.Application.UseCases.RfidUsuarioUseCases.Interfaces;
-using ControleDeAcesso26.Communication.MQTTCommunication.Payload.UsuarioRfid;
-using ControleDeAcesso26.Communication.MQTTCommunication.Topics;
+﻿using ControleDeAcesso26.Communication.MQTTCommunication.Topics;
 using ControleDeAcesso26.Infrastructure.Messaging.MQTT;
 using Microsoft.Extensions.Options;
 using MQTTnet;
-using System.Text;
-using System.Text.Json;
 
 namespace ControleDeAcesso26.API.MQTT
 {
@@ -15,7 +11,7 @@ namespace ControleDeAcesso26.API.MQTT
         private readonly MqttClientOptions _options;
         private readonly IMqttClient _mqttClient;
         private readonly IServiceScopeFactory _serviceScope;
-        public MqttInitializer(MqttClientFactory mqttClientFactory, IOptions<MqttSettings> settings, 
+        public MqttInitializer(MqttClientFactory mqttClientFactory, IOptions<MqttSettings> settings,
                             IMqttClient mqttClient, IServiceScopeFactory serviceScope)
         {
             _mqttClientFactory = mqttClientFactory;
@@ -29,7 +25,7 @@ namespace ControleDeAcesso26.API.MQTT
                                        .Build(); ;
             _mqttClient = mqttClient;
             _serviceScope = serviceScope;
-        }        
+        }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
