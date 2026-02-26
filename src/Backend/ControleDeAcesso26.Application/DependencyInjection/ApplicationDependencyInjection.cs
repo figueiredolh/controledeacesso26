@@ -13,6 +13,8 @@ namespace ControleDeAcesso26.Application.DependencyInjection
         private static void AddUseCases(IServiceCollection services)
         {
             DIUsuarioUseCase.Add(services);
+            DIBiometriaUsuario.Add(services);
+            //DIRfidUsuario.Add(services);
         }
     }
 }
