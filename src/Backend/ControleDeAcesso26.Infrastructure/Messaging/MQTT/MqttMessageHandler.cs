@@ -13,7 +13,7 @@ namespace ControleDeAcesso26.Infrastructure.Messaging.MQTT
             _mqttClient = mqttClient;
         }
         public async Task<T> HandleMessage(string topic)
-        {
+        {            
             // 1. Criamos uma promessa que será resolvida quando o MQTT chegar
             var taskCompletedSource = new TaskCompletionSource<T>();
 
@@ -29,24 +29,25 @@ namespace ControleDeAcesso26.Infrastructure.Messaging.MQTT
                 }
 
                 return taskCompletedSource.Task;
-            }
+            }           
 
-            // Assina o evento temporariamente
-            _mqttClient.ApplicationMessageReceivedAsync += OnMessageReceived;
-
-            // 3. Aguarda o MQTT com um Timeout
-            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(10));
-            var firstCompletedTask = Task.WhenAny(taskCompletedSource.Task, timeoutTask);
-
-            if (timeoutTask == firstCompletedTask)
+            try
             {
-                throw new TimeoutException("O sensor não enviou os dados necessários no tempo.");
+                // Assina o evento temporariamente
+                _mqttClient.ApplicationMessageReceivedAsync += OnMessageReceived;
+
+                var mqttData = await taskCompletedSource.Task.WaitAsync(TimeSpan.FromSeconds(30));
+
+                return mqttData;
             }
-
-            var mqttData = await taskCompletedSource.Task;
-            _mqttClient.ApplicationMessageReceivedAsync -= OnMessageReceived;
-
-            return mqttData;
+            catch(TimeoutException)
+            {
+                throw new TimeoutException("O sensor não enviou os dados a tempo");
+            }
+            finally
+            {
+                _mqttClient.ApplicationMessageReceivedAsync -= OnMessageReceived;
+            }            
         }
     }
 }

@@ -18,7 +18,7 @@ namespace ControleDeAcesso26.Infrastructure.Messaging.MQTT
             var applicationMessage = new MqttApplicationMessageBuilder()
                                     .WithTopic(topic)
                                     .WithPayload(payloadString)
-                                    .WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
+                                    //.WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
                                     .Build();
 
             await _mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
