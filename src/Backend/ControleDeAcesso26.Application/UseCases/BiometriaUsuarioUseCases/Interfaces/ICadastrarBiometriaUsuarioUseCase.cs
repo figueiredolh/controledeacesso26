@@ -1,7 +1,9 @@
-﻿namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases.Interfaces
+﻿using ControleDeAcesso26.Communication.Responses.ResponsesBiometriaUsuario;
+
+namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases.Interfaces
 {
     public interface ICadastrarBiometriaUsuarioUseCase
     {
-        public Task Execute(long idUsuario);
+        public Task<ResponseCadastrarBiometriaUsuarioJson> Execute(long idUsuario);
     }
 }
