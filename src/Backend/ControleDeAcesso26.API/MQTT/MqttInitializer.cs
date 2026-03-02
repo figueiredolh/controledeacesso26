@@ -42,13 +42,13 @@ namespace ControleDeAcesso26.API.MQTT
             {
                 try
                 {
-                    /*_mqttClient.ApplicationMessageReceivedAsync += async e =>
+                    _mqttClient.ApplicationMessageReceivedAsync += async e =>
                     {
                         using var scope = _serviceScope.CreateScope();
                         var topic = e.ApplicationMessage.Topic;
-                        var payload = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
+                        //var payload = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
 
-                        switch (topic)
+                        /*switch (topic)
                         {
                             case MqttTopics.LeituraRfidUsuario:
                                 var payloadDeserialized = JsonSerializer.Deserialize<MqttLeituraUsuarioRfidPayload>(payload)!;
@@ -58,8 +58,8 @@ namespace ControleDeAcesso26.API.MQTT
                                 break;
                             default:
                                 break;
-                        };
-                    };*/
+                        };*/
+                    };
 
                     if (!await _mqttClient.TryPingAsync()) //verifica se um pequeno pacote de controle (PINGREQ) não chega ao broker
                         await _mqttClient.ConnectAsync(_options, stoppingToken);
@@ -74,6 +74,8 @@ namespace ControleDeAcesso26.API.MQTT
 
             var mqttSubscribeOptions = _mqttClientFactory.CreateSubscribeOptionsBuilder()
                                    .WithTopicFilter(MqttTopics.Teste, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
+                                   .WithTopicFilter(MqttTopics.CadastrarBiometriaUsuarioEnviarDados)
+                                   //.WithTopicFilter(MqttTopics.CadastrarBiometriaUsuarioEnviarDados, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
                                    //.WithTopicFilter(MqttTopics.CadastrarRfidUsuario, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
                                    //.WithTopicFilter(MqttTopics.LeituraRfidUsuario, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
                                    .Build();
