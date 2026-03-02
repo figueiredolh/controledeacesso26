@@ -15,6 +15,11 @@ namespace ControleDeAcesso26.API.Filters
             {
                 HandleControleDeAcesso26Exception(context);
             }
+            else if (context.Exception is TimeoutException timeoutException)
+            {
+                context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                context.Result = new ObjectResult(new ResponseErrorJson(timeoutException.Message));
+            }
             else
             {
                 HandleControleDeAcesso26UnknownException(context);
