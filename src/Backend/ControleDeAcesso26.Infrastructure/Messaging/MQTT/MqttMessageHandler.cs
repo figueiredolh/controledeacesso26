@@ -42,7 +42,7 @@ namespace ControleDeAcesso26.Infrastructure.Messaging.MQTT
             }
             catch(TimeoutException)
             {
-                throw new TimeoutException("O sensor não enviou os dados a tempo");
+                throw new TimeoutException();
             }
             finally
             {
