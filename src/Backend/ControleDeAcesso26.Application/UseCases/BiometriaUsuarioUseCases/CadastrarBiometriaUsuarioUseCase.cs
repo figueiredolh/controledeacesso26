@@ -4,6 +4,8 @@ using ControleDeAcesso26.Communication.MQTTCommunication.Topics;
 using ControleDeAcesso26.Communication.Responses.ResponsesBiometriaUsuario;
 using ControleDeAcesso26.Domain.Entities;
 using ControleDeAcesso26.Domain.Interfaces.IMqtt;
+using ControleDeAcesso26.Domain.Interfaces.ITemplateBiometriaUsuario;
+using ControleDeAcesso26.Domain.Interfaces.IUnitOfWork;
 using ControleDeAcesso26.Domain.Interfaces.IUsuario;
 using ControleDeAcesso26.Exceptions.Exceptions;
 using ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages;
@@ -47,6 +49,28 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
                 var dadosBiometriaUsuario = await _handler.HandleMessage(MqttTopics.CadastrarBiometriaUsuarioEnviarDados);
 
                 //salvar no banco - tabela não criada
+                using (var scope = _serviceScopeFactory.CreateScope())
+                {
+                    var templateReadOnlyRepository = scope.ServiceProvider.GetRequiredService<ITemplateBiometriaReadOnlyRepository>();
+                    var templateWriteRepository = scope.ServiceProvider.GetRequiredService<ITemplateBiometriaWriteRepository>();
+                    var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+                    var idSensor1JaExiste = await templateReadOnlyRepository.IdSensor1JaExiste(dadosBiometriaUsuario.IdSensor);
+                    if (idSensor1JaExiste)
+                    {
+                        throw new MemorySensorSlotAlreadyOccupiedException(ValidatorsRulesResourceMessages.POSICAO_MEMORIA_SENSOR1_UTILIZADA);
+                    }
+
+                    TemplateBiometriaUsuario templateBD = new()
+                    {
+                        IdSensor1 = dadosBiometriaUsuario.IdSensor,
+                        IdUsuario = usuario.Id,
+                        Template = Convert.FromHexString(dadosBiometriaUsuario.UsuarioTemplate!)
+                    };
+
+                    await templateWriteRepository.ArmazenarTemplate(templateBD);
+                    await unitOfWork.SalvarMudancas();
+                }
 
                 //enviar response para front-end: nome do usuário e status (com id do sensor)
                 var response = new ResponseCadastrarBiometriaUsuarioJson()
@@ -59,11 +83,11 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
 
                 return response;
             }
-            catch (TimeoutException exception)
+            catch (TimeoutException)
             {
                 await _publisher.PublishMessage(MqttTopics.CadastrarBiometriaUsuario,
                                                 new MqttCadastrarBiometriaUsuarioPublishPayloadJson() { ColetarDados = false });
-                throw new TimeoutException(exception.Message);
+                throw new TimeoutException(ValidatorsRulesResourceMessages.SENSOR_TIMEOUT);
             }
         }
     }
