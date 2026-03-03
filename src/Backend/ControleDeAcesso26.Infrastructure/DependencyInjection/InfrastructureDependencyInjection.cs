@@ -59,6 +59,7 @@ namespace ControleDeAcesso26.Infrastructure.DependencyInjection
         {
             DIUnitOfWork.Add(services);
             DIUsuarioRepository.Add(services);
+            DITemplateBiometriaUsuarioRepository.Add(services);
         }      
 
         private static void AddMigrationServices(IServiceCollection services)
