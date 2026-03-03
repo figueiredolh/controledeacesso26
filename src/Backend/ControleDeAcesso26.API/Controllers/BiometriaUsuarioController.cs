@@ -8,7 +8,7 @@ namespace ControleDeAcesso26.API.Controllers
 {
     public class BiometriaUsuarioController : ControleDeAcesso26ControllerBase
     {
-        [HttpPost("{idUsuario}")]
+        [HttpPost("{idUsuario}/cadastrar")]
         [ProducesResponseType(typeof(ResponseCadastrarBiometriaUsuarioJson), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ResponseErrorJson))]
         public async Task<IActionResult> Cadastrar(long idUsuario, [FromServices] ICadastrarBiometriaUsuarioUseCase useCase)
