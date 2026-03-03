@@ -38,7 +38,7 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
 
             var payload = new MqttCadastrarBiometriaUsuarioPublishPayloadJson()
             {
-                ColetarDados = "true"
+                ColetarDados = true
             };
 
             try
@@ -52,6 +52,7 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
                 var response = new ResponseCadastrarBiometriaUsuarioJson()
                 {
                     NomeUsuario = usuario.Nome,
+                    UsuarioTemplate = dadosBiometriaUsuario.UsuarioTemplate,
                     IdSensor = dadosBiometriaUsuario.IdSensor,
                     Status = "Dados biométricos salvos com sucesso!"
                 };
@@ -61,12 +62,8 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
             catch (TimeoutException exception)
             {
                 await _publisher.PublishMessage(MqttTopics.CadastrarBiometriaUsuario,
-                                                new MqttCadastrarBiometriaUsuarioPublishPayloadJson() { ColetarDados = "false" });
+                                                new MqttCadastrarBiometriaUsuarioPublishPayloadJson() { ColetarDados = false });
                 throw new TimeoutException(exception.Message);
-            }
-            finally
-            {
-                await Task.CompletedTask;
             }
         }
     }
