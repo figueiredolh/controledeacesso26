@@ -2,6 +2,6 @@
 {
     public class MqttCadastrarBiometriaUsuarioPublishPayloadJson
     {
-        public required string ColetarDados { get; set; }
+        public required bool ColetarDados { get; set; }
     }
 }

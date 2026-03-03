@@ -2,7 +2,7 @@
 {
     public class MqttCadastrarBiometriaUsuarioReceivedPayloadJson
     {
-        //public byte[]? UsuarioTemplate { get; set; }
+        public string? UsuarioTemplate { get; set; }
         public int IdSensor { get; set; }
     }
 }
