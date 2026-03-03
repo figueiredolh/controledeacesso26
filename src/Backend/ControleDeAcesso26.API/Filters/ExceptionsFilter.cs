@@ -37,6 +37,13 @@ namespace ControleDeAcesso26.API.Filters
             if (context.Exception is NotFoundException notFoundException)
             {
                 context.Result = new NotFoundObjectResult(new ResponseErrorJson(notFoundException.ErrorMessage));
+                context.ExceptionHandled = true;
+            }
+
+            if (context.Exception is MemorySensorSlotAlreadyOccupiedException memorySensorSlotException)
+            {
+                context.Result = new ConflictObjectResult(new ResponseErrorJson(memorySensorSlotException.ErrorMessage));
+                context.ExceptionHandled = true;
             }
         }
 
