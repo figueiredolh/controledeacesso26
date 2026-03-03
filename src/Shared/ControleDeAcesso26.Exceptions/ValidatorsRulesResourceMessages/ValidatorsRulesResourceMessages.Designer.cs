@@ -71,11 +71,29 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A posição de memória do sensor principal nessa posição já foi gravada/utilizada.
+        /// </summary>
+        public static string POSICAO_MEMORIA_SENSOR1_UTILIZADA {
+            get {
+                return ResourceManager.GetString("POSICAO_MEMORIA_SENSOR1_UTILIZADA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Sem alterações. Falha na requisição.
         /// </summary>
         public static string SEM_ALTERACOES_FALHA {
             get {
                 return ResourceManager.GetString("SEM_ALTERACOES_FALHA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O sensor não enviou os dados a tempo.
+        /// </summary>
+        public static string SENSOR_TIMEOUT {
+            get {
+                return ResourceManager.GetString("SENSOR_TIMEOUT", resourceCulture);
             }
         }
         
