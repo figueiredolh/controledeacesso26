@@ -10,6 +10,7 @@ namespace ControleDeAcesso26.Infrastructure.DependencyInjection.AddDIEntityRepos
         {
             services.AddScoped<ITemplateBiometriaWriteRepository, TemplateBiometriaUsuarioRepository>();
             services.AddScoped<ITemplateBiometriaReadOnlyRepository, TemplateBiometriaUsuarioRepository>();
+            services.AddScoped<ITemplateBiometriaDeleteRepository, TemplateBiometriaUsuarioRepository>();
         }
     }
 }

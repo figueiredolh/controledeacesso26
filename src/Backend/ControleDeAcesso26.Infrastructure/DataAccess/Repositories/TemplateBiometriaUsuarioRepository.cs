@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ControleDeAcesso26.Infrastructure.DataAccess.Repositories
 {
-    public class TemplateBiometriaUsuarioRepository : ITemplateBiometriaWriteRepository, ITemplateBiometriaReadOnlyRepository
+    public class TemplateBiometriaUsuarioRepository : ITemplateBiometriaWriteRepository, ITemplateBiometriaReadOnlyRepository, ITemplateBiometriaDeleteRepository
     {
         private readonly ControleDeAcesso26DbContext _dbContext;
         public TemplateBiometriaUsuarioRepository(ControleDeAcesso26DbContext dbContext)
@@ -23,7 +23,16 @@ namespace ControleDeAcesso26.Infrastructure.DataAccess.Repositories
         {
             return await _dbContext.TemplatesBiometriaUsuario.AsNoTracking().AnyAsync(t => t.IdSensor1 == idSensor);
         }
+
+        public async Task<TemplateBiometriaUsuario?> BuscarTemplatePorId(int idSensor)
+        {
+            return await _dbContext.TemplatesBiometriaUsuario.Include(usuario => usuario.Usuario).AsNoTracking().FirstOrDefaultAsync(template => template.IdSensor1 == idSensor);
+        }
         //atualização
         //exclusão
+        public async Task ExcluirTemplate(int idSensor)
+        {
+            await _dbContext.TemplatesBiometriaUsuario.Where(template => template.IdSensor1 == idSensor).ExecuteDeleteAsync();
+        }
     }
 }
