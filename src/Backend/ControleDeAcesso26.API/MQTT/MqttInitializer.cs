@@ -75,6 +75,8 @@ namespace ControleDeAcesso26.API.MQTT
             var mqttSubscribeOptions = _mqttClientFactory.CreateSubscribeOptionsBuilder()
                                    .WithTopicFilter(MqttTopics.Teste, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
                                    .WithTopicFilter(MqttTopics.CadastrarBiometriaUsuarioEnviarDados)
+                                   .WithTopicFilter(MqttTopics.ExcluirBiometriaUsuarioEnviarDadosSensor1)
+                                   //.WithTopicFilter(MqttTopics.ExcluirBiometriaUsuarioEnviarDadosSensor2)
                                    //.WithTopicFilter(MqttTopics.CadastrarBiometriaUsuarioEnviarDados, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
                                    //.WithTopicFilter(MqttTopics.CadastrarRfidUsuario, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
                                    //.WithTopicFilter(MqttTopics.LeituraRfidUsuario, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)

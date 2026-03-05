@@ -16,5 +16,14 @@ namespace ControleDeAcesso26.API.Controllers
             var result = await useCase.Execute(idUsuario);
             return Ok(result);
         }
+
+        [HttpDelete("{idSensor}/excluir")]
+        [ProducesResponseType(typeof(ResponseExcluirBiometriaUsuarioJson), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ResponseErrorJson))]
+        public async Task<IActionResult> ExcluirTemplate(int idSensor, [FromServices] IExcluirBiometriaUsuarioUseCase useCase)
+        {
+            var result = await useCase.Execute(idSensor);
+            return Ok(result);
+        }
     }
 }
