@@ -12,6 +12,7 @@ namespace ControleDeAcesso26.Application.DependencyInjection.AddDIEntityUseCases
         internal static void Add(IServiceCollection services)
         {
             services.AddScoped<ICadastrarBiometriaUsuarioUseCase, CadastrarBiometriaUsuarioUseCase>();
+            services.AddScoped<IExcluirBiometriaUsuarioUseCase, ExcluirBiometriaUsuarioUseCase>();
         }
     }
 }
