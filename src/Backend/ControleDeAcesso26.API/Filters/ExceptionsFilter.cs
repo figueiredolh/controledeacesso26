@@ -45,6 +45,18 @@ namespace ControleDeAcesso26.API.Filters
                 context.Result = new ConflictObjectResult(new ResponseErrorJson(memorySensorSlotException.ErrorMessage));
                 context.ExceptionHandled = true;
             }
+
+            if (context.Exception is SensorAlreadyOccupiedException sensorOccupiedException)
+            {
+                context.Result = new ConflictObjectResult(new ResponseErrorJson(sensorOccupiedException.ErrorMessage));
+                context.ExceptionHandled = true;
+            }
+
+            if (context.Exception is AttemptLimitReachedException attemptReachedException)
+            {
+                context.Result = new ConflictObjectResult(new ResponseErrorJson(attemptReachedException.ErrorMessage));
+                context.ExceptionHandled = true;
+            }
         }
 
         private static void HandleControleDeAcesso26UnknownException(ExceptionContext context)
