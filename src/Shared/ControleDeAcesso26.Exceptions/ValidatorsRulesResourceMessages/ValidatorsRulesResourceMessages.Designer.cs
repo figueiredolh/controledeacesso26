@@ -71,15 +71,6 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a A posição de memória do sensor principal nessa posição já foi gravada/utilizada.
-        /// </summary>
-        public static string POSICAO_MEMORIA_SENSOR1_UTILIZADA {
-            get {
-                return ResourceManager.GetString("POSICAO_MEMORIA_SENSOR1_UTILIZADA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Sem alterações. Falha na requisição.
         /// </summary>
         public static string SEM_ALTERACOES_FALHA {
@@ -94,6 +85,42 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         public static string SENSOR_TIMEOUT {
             get {
                 return ResourceManager.GetString("SENSOR_TIMEOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O limite de tentativas foi atingido.
+        /// </summary>
+        public static string SENSOR1_LIMITE_TENTATIVA {
+            get {
+                return ResourceManager.GetString("SENSOR1_LIMITE_TENTATIVA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O sensor principal está ocupado no momento.
+        /// </summary>
+        public static string SENSOR1_OCUPADO {
+            get {
+                return ResourceManager.GetString("SENSOR1_OCUPADO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A posição de memória do sensor principal nessa posição já foi gravada/utilizada.
+        /// </summary>
+        public static string SENSOR1_POSICAO_MEMORIA_UTILIZADA {
+            get {
+                return ResourceManager.GetString("SENSOR1_POSICAO_MEMORIA_UTILIZADA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Todos os slots da memória do sensor principal estão ocupados.
+        /// </summary>
+        public static string SENSOR1_SLOTS_OCUPADOS {
+            get {
+                return ResourceManager.GetString("SENSOR1_SLOTS_OCUPADOS", resourceCulture);
             }
         }
         

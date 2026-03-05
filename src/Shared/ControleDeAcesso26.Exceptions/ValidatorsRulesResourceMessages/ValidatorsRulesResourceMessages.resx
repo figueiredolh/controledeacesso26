@@ -150,10 +150,19 @@
   <data name="USUARIO_NOME_VAZIO" xml:space="preserve">
     <value>O nome do usuário não pode estar vazio</value>
   </data>
-  <data name="POSICAO_MEMORIA_SENSOR1_UTILIZADA" xml:space="preserve">
+  <data name="SENSOR1_POSICAO_MEMORIA_UTILIZADA" xml:space="preserve">
     <value>A posição de memória do sensor principal nessa posição já foi gravada/utilizada</value>
   </data>
   <data name="SENSOR_TIMEOUT" xml:space="preserve">
     <value>O sensor não enviou os dados a tempo</value>
+  </data>
+  <data name="SENSOR1_OCUPADO" xml:space="preserve">
+    <value>O sensor principal está ocupado no momento</value>
+  </data>
+  <data name="SENSOR1_LIMITE_TENTATIVA" xml:space="preserve">
+    <value>O limite de tentativas foi atingido</value>
+  </data>
+  <data name="SENSOR1_SLOTS_OCUPADOS" xml:space="preserve">
+    <value>Todos os slots da memória do sensor principal estão ocupados</value>
   </data>
 </root>
