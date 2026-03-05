@@ -48,7 +48,16 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
                 await _publisher.PublishMessage(MqttTopics.CadastrarBiometriaUsuario, payload);
                 var dadosBiometriaUsuario = await _handler.HandleMessage(MqttTopics.CadastrarBiometriaUsuarioEnviarDados);
 
-                //salvar no banco - tabela não criada
+                if (dadosBiometriaUsuario.IdSensor == 0 && dadosBiometriaUsuario.UsuarioTemplate!.Contains('0'))
+                    throw new SensorAlreadyOccupiedException(ValidatorsRulesResourceMessages.SENSOR1_OCUPADO);
+
+                if (dadosBiometriaUsuario.IdSensor == 0 && dadosBiometriaUsuario.UsuarioTemplate!.Contains('1'))
+                    throw new MemorySensorSlotAlreadyOccupiedException(ValidatorsRulesResourceMessages.SENSOR1_SLOTS_OCUPADOS);
+
+                if (dadosBiometriaUsuario.IdSensor == 0 && dadosBiometriaUsuario.UsuarioTemplate!.Contains('2'))
+                    throw new AttemptLimitReachedException(ValidatorsRulesResourceMessages.SENSOR1_LIMITE_TENTATIVA);
+
+                //salvar no banco
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     var templateReadOnlyRepository = scope.ServiceProvider.GetRequiredService<ITemplateBiometriaReadOnlyRepository>();
@@ -58,7 +67,7 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
                     var idSensor1JaExiste = await templateReadOnlyRepository.IdSensor1JaExiste(dadosBiometriaUsuario.IdSensor);
                     if (idSensor1JaExiste)
                     {
-                        throw new MemorySensorSlotAlreadyOccupiedException(ValidatorsRulesResourceMessages.POSICAO_MEMORIA_SENSOR1_UTILIZADA);
+                        throw new MemorySensorSlotAlreadyOccupiedException(ValidatorsRulesResourceMessages.SENSOR1_POSICAO_MEMORIA_UTILIZADA);
                     }
 
                     TemplateBiometriaUsuario templateBD = new()
