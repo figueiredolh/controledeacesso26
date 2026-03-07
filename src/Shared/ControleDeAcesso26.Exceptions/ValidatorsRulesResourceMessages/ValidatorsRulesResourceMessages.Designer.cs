@@ -62,11 +62,29 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Erro ao se comunicar com o banco de dados.
+        /// </summary>
+        public static string ERRO_CADASTRO_BIOMETRIA_BANCO {
+            get {
+                return ResourceManager.GetString("ERRO_CADASTRO_BIOMETRIA_BANCO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Erro desconhecido.
         /// </summary>
         public static string ERRO_DESCONHECIDO {
             get {
                 return ResourceManager.GetString("ERRO_DESCONHECIDO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Este usuário possui biometrias cadastradas. É necessário excluí-las antes..
+        /// </summary>
+        public static string ERRO_USUARIO_BIOMETRIAS_ASSOCIADAS {
+            get {
+                return ResourceManager.GetString("ERRO_USUARIO_BIOMETRIAS_ASSOCIADAS", resourceCulture);
             }
         }
         
@@ -89,6 +107,24 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Falha ao excluir template no sensor.
+        /// </summary>
+        public static string SENSOR1_ERRO_EXCLUIR_TEMPLATE {
+            get {
+                return ResourceManager.GetString("SENSOR1_ERRO_EXCLUIR_TEMPLATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Falha ao salvar template no sensor.
+        /// </summary>
+        public static string SENSOR1_ERRO_SALVAR_TEMPLATE {
+            get {
+                return ResourceManager.GetString("SENSOR1_ERRO_SALVAR_TEMPLATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a O limite de tentativas foi atingido.
         /// </summary>
         public static string SENSOR1_LIMITE_TENTATIVA {
@@ -107,6 +143,15 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Operação cancelada pelo usuário.
+        /// </summary>
+        public static string SENSOR1_OPERACAO_CANCELADA {
+            get {
+                return ResourceManager.GetString("SENSOR1_OPERACAO_CANCELADA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A posição de memória do sensor principal nessa posição já foi gravada/utilizada.
         /// </summary>
         public static string SENSOR1_POSICAO_MEMORIA_UTILIZADA {
@@ -121,6 +166,15 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         public static string SENSOR1_SLOTS_OCUPADOS {
             get {
                 return ResourceManager.GetString("SENSOR1_SLOTS_OCUPADOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Template relacionado a este id não se encontra na base de dados.
+        /// </summary>
+        public static string TEMPLATE_NAO_ENCONTRADO_BANCO {
+            get {
+                return ResourceManager.GetString("TEMPLATE_NAO_ENCONTRADO_BANCO", resourceCulture);
             }
         }
         
