@@ -4,5 +4,6 @@
     {
         public string? UsuarioTemplate { get; set; }
         public int IdSensor { get; set; }
+        public int? CodigoErro { get; set; }
     }
 }

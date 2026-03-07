@@ -3,5 +3,6 @@
     public class MqttCadastrarBiometriaUsuarioPublishPayloadJson
     {
         public required bool ColetarDados { get; set; }
+        public int CadastroEtapa { get; set; }
     }
 }
