@@ -1,5 +1,6 @@
 ﻿using ControleDeAcesso26.Domain.Interfaces.IMqtt;
 using MQTTnet;
+using MQTTnet.Internal;
 using System.Text;
 using System.Text.Json;
 
@@ -13,15 +14,19 @@ namespace ControleDeAcesso26.Infrastructure.Messaging.MQTT
             _mqttClient = mqttClient;
         }
         public async Task<T> HandleMessage(string topic)
-        {            
+        {
             // 1. Criamos uma promessa que será resolvida quando o MQTT chegar
+            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             var taskCompletedSource = new TaskCompletionSource<T>();
 
             // 2. Definimos o que fazer ao receber a mensagem
             Task OnMessageReceived(MqttApplicationMessageReceivedEventArgs e)
-            {
+            {    
                 if (e.ApplicationMessage.Topic == topic)
                 {
+                    // Renovação do Timeout
+                    cts.CancelAfter(TimeSpan.FromSeconds(5));
+
                     var payload = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
                     var mqttData = JsonSerializer.Deserialize<T>(payload);
 
@@ -36,11 +41,11 @@ namespace ControleDeAcesso26.Infrastructure.Messaging.MQTT
                 // Assina o evento temporariamente
                 _mqttClient.ApplicationMessageReceivedAsync += OnMessageReceived;
 
-                var mqttData = await taskCompletedSource.Task.WaitAsync(TimeSpan.FromSeconds(30));
+                var mqttData = await taskCompletedSource.Task.WaitAsync(cts.Token);
 
                 return mqttData;
             }
-            catch(TimeoutException)
+            catch(OperationCanceledException)
             {
                 throw new TimeoutException();
             }
