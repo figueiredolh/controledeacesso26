@@ -19,7 +19,7 @@ namespace ControleDeAcesso26.Infrastructure.DataAccess.Repositories
             await _dbContext.TemplatesBiometriaUsuario.AddAsync(template);
         }
         //leitura
-        public async Task<bool> IdSensor1JaExiste(long idSensor)
+        public async Task<bool> IdSensor1JaExiste(int idSensor)
         {
             return await _dbContext.TemplatesBiometriaUsuario.AsNoTracking().AnyAsync(t => t.IdSensor1 == idSensor);
         }
