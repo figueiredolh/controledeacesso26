@@ -58,7 +58,7 @@ namespace ControleDeAcesso26.API.Controllers
             return Ok(usuarioDeleteResult);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [ProducesResponseType(typeof(ResponseExcluirUsuarioDefinitivamenteJson), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ResponseErrorJson))]
         public async Task<IActionResult> ExcluirUsuarioDefinitivamente(long id, [FromServices] IExcluirUsuarioDefinitivamenteUseCase excluirDefUsuarioUseCase)
