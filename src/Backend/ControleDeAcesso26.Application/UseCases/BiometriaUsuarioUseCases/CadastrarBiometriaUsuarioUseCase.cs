@@ -1,5 +1,6 @@
 ﻿using ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases.Interfaces;
 using ControleDeAcesso26.Communication.MQTTCommunication.Payloads.BiometriaUsuario.Cadastro;
+using ControleDeAcesso26.Communication.MQTTCommunication.Payloads.BiometriaUsuario.Cadastro.CadastroEtapas;
 using ControleDeAcesso26.Communication.MQTTCommunication.Topics;
 using ControleDeAcesso26.Communication.Responses.ResponsesBiometriaUsuario;
 using ControleDeAcesso26.Domain.Entities;
@@ -40,53 +41,74 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
 
             var payload = new MqttCadastrarBiometriaUsuarioPublishPayloadJson()
             {
-                ColetarDados = true
+                ColetarDados = true,
+                CadastroEtapa = CadastroEtapas.IniciarCadastro
             };
 
             try
             {
-                await _publisher.PublishMessage(MqttTopics.CadastrarBiometriaUsuario, payload);
-                var dadosBiometriaUsuario = await _handler.HandleMessage(MqttTopics.CadastrarBiometriaUsuarioEnviarDados);
+                await _publisher.PublishMessage(MqttTopics.CadastrarBiometriaUsuarioSensor1, payload);
+                var dadosBiometriaUsuarioSensor1 = await _handler.HandleMessage(MqttTopics.CadastrarBiometriaUsuarioEnviarDadosSensor1);
 
-                if (dadosBiometriaUsuario.IdSensor == 0 && dadosBiometriaUsuario.UsuarioTemplate!.Contains('0'))
+                if (dadosBiometriaUsuarioSensor1.CodigoErro == 1)
                     throw new SensorAlreadyOccupiedException(ValidatorsRulesResourceMessages.SENSOR1_OCUPADO);
 
-                if (dadosBiometriaUsuario.IdSensor == 0 && dadosBiometriaUsuario.UsuarioTemplate!.Contains('1'))
-                    throw new MemorySensorSlotAlreadyOccupiedException(ValidatorsRulesResourceMessages.SENSOR1_SLOTS_OCUPADOS);
+                if (dadosBiometriaUsuarioSensor1.CodigoErro == 2)
+                    throw new MemorySensorSlotAlreadyOccupiedException(dadosBiometriaUsuarioSensor1.IdSensor, ValidatorsRulesResourceMessages.SENSOR1_SLOTS_OCUPADOS);
 
-                if (dadosBiometriaUsuario.IdSensor == 0 && dadosBiometriaUsuario.UsuarioTemplate!.Contains('2'))
+                if (dadosBiometriaUsuarioSensor1.CodigoErro == 3)
+                    throw new SensorOperationCanceledException(ValidatorsRulesResourceMessages.SENSOR1_OPERACAO_CANCELADA);
+
+                if (dadosBiometriaUsuarioSensor1.CodigoErro == 4)
                     throw new AttemptLimitReachedException(ValidatorsRulesResourceMessages.SENSOR1_LIMITE_TENTATIVA);
 
-                //salvar no banco
-                using (var scope = _serviceScopeFactory.CreateScope())
+                //caso passe pelo handler anterior: envia confirmação e aprovação da gravação do template no sensor
+                var payloadConfirmacao = new MqttCadastrarBiometriaUsuarioPublishPayloadJson()
                 {
-                    var templateReadOnlyRepository = scope.ServiceProvider.GetRequiredService<ITemplateBiometriaReadOnlyRepository>();
-                    var templateWriteRepository = scope.ServiceProvider.GetRequiredService<ITemplateBiometriaWriteRepository>();
-                    var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                    ColetarDados = true,
+                    CadastroEtapa = CadastroEtapas.SucessoRecebimentoEAprovarGravacao
+                };
 
-                    var idSensor1JaExiste = await templateReadOnlyRepository.IdSensor1JaExiste(dadosBiometriaUsuario.IdSensor);
-                    if (idSensor1JaExiste)
-                    {
-                        throw new MemorySensorSlotAlreadyOccupiedException(ValidatorsRulesResourceMessages.SENSOR1_POSICAO_MEMORIA_UTILIZADA);
-                    }
+                await _publisher.PublishMessage(MqttTopics.CadastrarBiometriaUsuarioSensor1, payloadConfirmacao);
+                var sucessoGravacaoSensor1 = await _handler.HandleMessage(MqttTopics.CadastrarBiometriaUsuarioEnviarDadosSensor1);
 
-                    TemplateBiometriaUsuario templateBD = new()
-                    {
-                        IdSensor1 = dadosBiometriaUsuario.IdSensor,
-                        IdUsuario = usuario.Id,
-                        Template = Convert.FromHexString(dadosBiometriaUsuario.UsuarioTemplate!)
-                    };
-
-                    await templateWriteRepository.ArmazenarTemplate(templateBD);
-                    await unitOfWork.SalvarMudancas();
+                if (sucessoGravacaoSensor1.CodigoErro == 5)
+                {
+                    throw new SensorSaveTemplateException(sucessoGravacaoSensor1.IdSensor, ValidatorsRulesResourceMessages.SENSOR1_ERRO_SALVAR_TEMPLATE);
                 }
+
+                if (sucessoGravacaoSensor1.CodigoErro == 0) //salvar no banco - garantia após o sucesso da gravação do template no sensor
+                {
+                    using (var scope = _serviceScopeFactory.CreateScope())
+                    {
+                        var templateReadOnlyRepository = scope.ServiceProvider.GetRequiredService<ITemplateBiometriaReadOnlyRepository>();
+                        var templateWriteRepository = scope.ServiceProvider.GetRequiredService<ITemplateBiometriaWriteRepository>();
+                        var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+                        var idSensor1JaExiste = await templateReadOnlyRepository.IdSensor1JaExiste((int)dadosBiometriaUsuarioSensor1.IdSensor!);
+                        if (idSensor1JaExiste)
+                        {
+                            throw new MemorySensorSlotAlreadyOccupiedException((int)dadosBiometriaUsuarioSensor1.IdSensor, ValidatorsRulesResourceMessages.SENSOR1_POSICAO_MEMORIA_UTILIZADA);
+                        }
+
+                        TemplateBiometriaUsuario templateBD = new()
+                        {
+                            IdSensor1 = (int)dadosBiometriaUsuarioSensor1.IdSensor,
+                            IdUsuario = usuario.Id,
+                            Template = Convert.FromHexString(dadosBiometriaUsuarioSensor1.UsuarioTemplate!)
+                        };
+
+                        await templateWriteRepository.ArmazenarTemplate(templateBD);
+                        await unitOfWork.SalvarMudancas();
+                    }
+                }                
 
                 //enviar response para front-end: nome do usuário e status (com id do sensor)
                 var response = new ResponseCadastrarBiometriaUsuarioJson()
                 {
                     NomeUsuario = usuario.Nome,
-                    UsuarioTemplate = dadosBiometriaUsuario.UsuarioTemplate,
-                    IdSensor = dadosBiometriaUsuario.IdSensor,
+                    UsuarioTemplate = dadosBiometriaUsuarioSensor1.UsuarioTemplate,
+                    IdSensor = dadosBiometriaUsuarioSensor1.IdSensor,
                     Status = "Dados biométricos salvos com sucesso!"
                 };
 
@@ -94,7 +116,7 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
             }
             catch (TimeoutException)
             {
-                await _publisher.PublishMessage(MqttTopics.CadastrarBiometriaUsuario,
+                await _publisher.PublishMessage(MqttTopics.CadastrarBiometriaUsuarioSensor1,
                                                 new MqttCadastrarBiometriaUsuarioPublishPayloadJson() { ColetarDados = false });
                 throw new TimeoutException(ValidatorsRulesResourceMessages.SENSOR_TIMEOUT);
             }

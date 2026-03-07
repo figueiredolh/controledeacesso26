@@ -1,11 +1,11 @@
 ﻿using ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases.Interfaces;
-using ControleDeAcesso26.Communication.MQTTCommunication.Payloads.BiometriaUsuario.Cadastro;
 using ControleDeAcesso26.Communication.MQTTCommunication.Payloads.BiometriaUsuario.Excluir;
 using ControleDeAcesso26.Communication.MQTTCommunication.Topics;
 using ControleDeAcesso26.Communication.Responses.ResponsesBiometriaUsuario;
 using ControleDeAcesso26.Domain.Entities;
 using ControleDeAcesso26.Domain.Interfaces.IMqtt;
 using ControleDeAcesso26.Domain.Interfaces.ITemplateBiometriaUsuario;
+using ControleDeAcesso26.Exceptions.Exceptions;
 using ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,7 +18,8 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
         private readonly IMqttPublisher<MqttExcluirBiometriaUsuarioPublishPayloadJson> _publisher;
         private readonly IMqttHandler<MqttExcluirBiometriaUsuarioReceivedPayloadJson> _handler;
 
-        public ExcluirBiometriaUsuarioUseCase(IServiceScopeFactory serviceScopeFactory, IMqttPublisher<MqttExcluirBiometriaUsuarioPublishPayloadJson> publisher,
+        public ExcluirBiometriaUsuarioUseCase(IServiceScopeFactory serviceScopeFactory,
+                                              IMqttPublisher<MqttExcluirBiometriaUsuarioPublishPayloadJson> publisher,
                                               IMqttHandler<MqttExcluirBiometriaUsuarioReceivedPayloadJson> handler)
         {
             _serviceScopeFactory = serviceScopeFactory;
@@ -36,7 +37,7 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
 
             if (templateBiometriaUsuario is null)
             {
-                throw new Exception();
+                throw new NotFoundException(ValidatorsRulesResourceMessages.TEMPLATE_NAO_ENCONTRADO_BANCO);
             }
 
             var payload = new MqttExcluirBiometriaUsuarioPublishPayloadJson()
@@ -47,27 +48,30 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
             try
             {
                 await _publisher.PublishMessage(MqttTopics.ExcluirBiometriaUsuarioSensor1, payload);
-                var statusExcluidoSensor1 = await _handler.HandleMessage(MqttTopics.ExcluirBiometriaUsuarioEnviarDadosSensor1);
+                var dadosEnviadosSensor1 = await _handler.HandleMessage(MqttTopics.ExcluirBiometriaUsuarioEnviarDadosSensor1);
 
                 //excluir template no slot relacionado no sensor 2:
                 /*await _publisher.PublishMessage(MqttTopics.ExcluirBiometriaUsuarioSensor2, payload);
                 var statusExcluidoSensor2 = await _handler.HandleMessage(MqttTopics.ExcluirBiometriaUsuarioSensor2);*/
 
-                if (statusExcluidoSensor1.Excluido == false)
+                if (dadosEnviadosSensor1.CodigoErro == 1)
                 {
-                    throw new Exception();
+                    throw new SensorAlreadyOccupiedException(ValidatorsRulesResourceMessages.SENSOR1_ERRO_EXCLUIR_TEMPLATE);
                 }
 
-                /*if (statusExcluidoSensor2.Excluido == false)
+                if (dadosEnviadosSensor1.CodigoErro == 2)
                 {
-                    throw new Exception();
-                }*/
+                    throw new SensorSaveTemplateException(dadosEnviadosSensor1.IdSensor, ValidatorsRulesResourceMessages.SENSOR1_ERRO_EXCLUIR_TEMPLATE);
+                }
 
-                using (var scope = _serviceScopeFactory.CreateScope())
+                if (dadosEnviadosSensor1.CodigoErro == 0) //garantia de que o template tenha sido deletado com sucesso
                 {
-                    var templateBiometriaDeleteRepository = scope.ServiceProvider.GetRequiredService<ITemplateBiometriaDeleteRepository>();
+                    using (var scope = _serviceScopeFactory.CreateScope())
+                    {
+                        var templateBiometriaDeleteRepository = scope.ServiceProvider.GetRequiredService<ITemplateBiometriaDeleteRepository>();
 
-                    await templateBiometriaDeleteRepository.ExcluirTemplate(idSensor);
+                        await templateBiometriaDeleteRepository.ExcluirTemplate(idSensor);
+                    }
                 }
 
                 var response = new ResponseExcluirBiometriaUsuarioJson()
@@ -80,7 +84,7 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
             }
             catch (TimeoutException)
             {
-                await _publisher.PublishMessage(MqttTopics.CadastrarBiometriaUsuario,
+                await _publisher.PublishMessage(MqttTopics.ExcluirBiometriaUsuarioSensor1,
                                                 new MqttExcluirBiometriaUsuarioPublishPayloadJson() { IdSensor = 0 });
                 throw new TimeoutException(ValidatorsRulesResourceMessages.SENSOR_TIMEOUT);
             }
