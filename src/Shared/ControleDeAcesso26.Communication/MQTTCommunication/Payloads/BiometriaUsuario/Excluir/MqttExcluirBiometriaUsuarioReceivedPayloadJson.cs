@@ -2,7 +2,7 @@
 {
     public class MqttExcluirBiometriaUsuarioReceivedPayloadJson
     {
-        public bool Excluido { get; init; }
-        public int? Codigo { get; init; }
+        public required int CodigoErro { get; set; }
+        public int IdSensor { get; set; }
     }
 }
