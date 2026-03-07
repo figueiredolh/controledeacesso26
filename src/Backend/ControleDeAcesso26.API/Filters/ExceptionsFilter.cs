@@ -40,6 +40,12 @@ namespace ControleDeAcesso26.API.Filters
                 context.ExceptionHandled = true;
             }
 
+            if (context.Exception is DbDeleteUsuarioException deleteUsuarioException)
+            {
+                context.Result = new ConflictObjectResult(new ResponseErrorJson(deleteUsuarioException.ErrorMessage));
+                context.ExceptionHandled = true;
+            }
+
             if (context.Exception is MemorySensorSlotAlreadyOccupiedException memorySensorSlotException)
             {
                 context.Result = new ConflictObjectResult(new ResponseErrorJson(memorySensorSlotException.ErrorMessage));
@@ -55,6 +61,24 @@ namespace ControleDeAcesso26.API.Filters
             if (context.Exception is AttemptLimitReachedException attemptReachedException)
             {
                 context.Result = new ConflictObjectResult(new ResponseErrorJson(attemptReachedException.ErrorMessage));
+                context.ExceptionHandled = true;
+            }
+
+            if (context.Exception is SensorOperationCanceledException sensorOperationCanceledException)
+            {
+                context.Result = new ConflictObjectResult(new ResponseErrorJson(sensorOperationCanceledException.ErrorMessage));
+                context.ExceptionHandled = true;
+            }
+
+            if (context.Exception is SensorSaveTemplateException sensorSaveTemplateException)
+            {
+                context.Result = new ConflictObjectResult(new ResponseSensorErrorJson(sensorSaveTemplateException.IdSensor, sensorSaveTemplateException.ErrorMessage));
+                context.ExceptionHandled = true;
+            }
+
+            if (context.Exception is SensorDeleteTemplateException sensorDeleteTemplateException)
+            {
+                context.Result = new ConflictObjectResult(new ResponseSensorErrorJson(sensorDeleteTemplateException.IdSensor, sensorDeleteTemplateException.ErrorMessage));
                 context.ExceptionHandled = true;
             }
         }
