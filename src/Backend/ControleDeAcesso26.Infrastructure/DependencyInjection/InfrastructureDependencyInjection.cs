@@ -39,7 +39,16 @@ namespace ControleDeAcesso26.Infrastructure.DependencyInjection
         private static void AddMqtt(IServiceCollection services, IConfiguration configuration)
         {
             //MqttSettings - Microsoft.Extensions.Options.ConfigurationExtensions
-            services.Configure<MqttSettings>(configuration.GetSection("MqttSettings"));
+            var brokerSelected = configuration.GetValue<int>("MqttBroker");
+
+            if (brokerSelected == MqttBrokers.HiveMQ)
+            {
+                services.Configure<MqttSettings>(configuration.GetSection("MqttSettingsHiveMQ"));
+            }
+            else if (brokerSelected == MqttBrokers.Mosquitto)
+            {
+                services.Configure<MqttSettings>(configuration.GetSection("MqttSettingsMosquitto"));
+            }           
 
             //MqttFactory
             services.AddSingleton<MqttClientFactory>();
