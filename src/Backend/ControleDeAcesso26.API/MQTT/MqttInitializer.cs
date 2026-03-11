@@ -18,24 +18,54 @@ namespace ControleDeAcesso26.API.MQTT
             _options = new MqttClientOptionsBuilder()
                                        .WithTcpServer(settings.Value.Server, settings.Value.Port)
                                        .WithCredentials(settings.Value.Hostname, settings.Value.Password)
+                                       .WithClientId("dotnet-backend-service")
                                        .WithTlsOptions(opt =>
                                        {
                                            opt.UseTls();
+                                           opt.WithCertificateValidationHandler(_ => true);
                                        })
-                                       .Build(); ;
+                                       .WithCleanSession(false)
+                                       .WithCleanStart(false)
+                                       .Build();
             _mqttClient = mqttClient;
             _serviceScope = serviceScope;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            var mqttSubscribeOptions = _mqttClientFactory.CreateSubscribeOptionsBuilder()
+                                   .WithTopicFilter(MqttTopics.Teste, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
+                                   .WithTopicFilter(MqttTopics.CadastrarBiometriaUsuarioEnviarDadosSensor1, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
+                                   .WithTopicFilter(MqttTopics.CadastrarBiometriaUsuarioEnviarDadosSensor1Feedback)
+                                   .WithTopicFilter(MqttTopics.ExcluirBiometriaUsuarioEnviarDadosSensor1, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
+                                   //.WithTopicFilter(MqttTopics.ExcluirBiometriaUsuarioEnviarDadosSensor2)
+                                   //.WithTopicFilter(MqttTopics.CadastrarBiometriaUsuarioEnviarDados, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
+                                   //.WithTopicFilter(MqttTopics.CadastrarRfidUsuario, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
+                                   //.WithTopicFilter(MqttTopics.LeituraRfidUsuario, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
+                                   .Build();
+
             _mqttClient.DisconnectedAsync += async e =>
             {
-                Console.WriteLine("Conexão caiu. Tentando reconectar em 5s...");
-                await Task.Delay(TimeSpan.FromSeconds(5));
+                try
+                {
+                    Console.WriteLine("Conexão caiu. Tentando reconectar em 5s...");
+                    await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
 
-                // Tenta reconectar. Se falhar aqui, o evento disparará novamente (recursão segura)
-                await _mqttClient.ConnectAsync(_options, CancellationToken.None);
+                    // Verifica se o app ainda está rodando antes de tentar
+                    if (!stoppingToken.IsCancellationRequested)
+                    {
+                        await _mqttClient.ConnectAsync(_options, stoppingToken);
+
+                        // Re-assina os tópicos (importante se o broker perder a sessão)
+                        await _mqttClient.SubscribeAsync(mqttSubscribeOptions, stoppingToken);
+
+                        Console.WriteLine("Reconectado e tópicos assinados com sucesso.");
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Erro ao tentar reconectar. Tentando novamente...");
+                }                
             };
 
             while (!stoppingToken.IsCancellationRequested)
@@ -70,19 +100,9 @@ namespace ControleDeAcesso26.API.MQTT
                 {
                     await Task.Delay(5000, stoppingToken); // Espera 5s para tentar de novo
                 }
-            }
+            }            
 
-            var mqttSubscribeOptions = _mqttClientFactory.CreateSubscribeOptionsBuilder()
-                                   .WithTopicFilter(MqttTopics.Teste, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
-                                   .WithTopicFilter(MqttTopics.CadastrarBiometriaUsuarioEnviarDadosSensor1)
-                                   .WithTopicFilter(MqttTopics.ExcluirBiometriaUsuarioEnviarDadosSensor1)
-                                   //.WithTopicFilter(MqttTopics.ExcluirBiometriaUsuarioEnviarDadosSensor2)
-                                   //.WithTopicFilter(MqttTopics.CadastrarBiometriaUsuarioEnviarDados, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
-                                   //.WithTopicFilter(MqttTopics.CadastrarRfidUsuario, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
-                                   //.WithTopicFilter(MqttTopics.LeituraRfidUsuario, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
-                                   .Build();
-
-            await _mqttClient.SubscribeAsync(mqttSubscribeOptions, CancellationToken.None);
+            await _mqttClient.SubscribeAsync(mqttSubscribeOptions, stoppingToken);
 
             Console.WriteLine("Cliente Mqtt Inscrito");
         }
