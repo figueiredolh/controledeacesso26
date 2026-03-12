@@ -19,6 +19,18 @@ namespace ControleDeAcesso26.Infrastructure.DataAccess.Repositories
             await _dbContext.TemplatesBiometriaUsuario.AddAsync(template);
         }
         //leitura
+        public async Task<List<TemplateBiometriaUsuario>> BuscarTemplates(int? idUsuario = null, int paginaAtual = 1, int tamanhoPagina = 10)
+        {
+            int pagesToSkip = (paginaAtual - 1) * tamanhoPagina;
+            var query = _dbContext.TemplatesBiometriaUsuario.AsNoTracking();
+
+            if (idUsuario is not null && idUsuario > 0)
+            {
+                query = query.Where(t => t.Usuario.Id == idUsuario);
+            }
+
+            return await query.Include(t => t.Usuario).OrderBy(t => t.Id).Skip(pagesToSkip).Take(tamanhoPagina).ToListAsync();
+        }
         public async Task<bool> IdSensor1JaExiste(int idSensor)
         {
             return await _dbContext.TemplatesBiometriaUsuario.AsNoTracking().AnyAsync(t => t.IdSensor1 == idSensor);
