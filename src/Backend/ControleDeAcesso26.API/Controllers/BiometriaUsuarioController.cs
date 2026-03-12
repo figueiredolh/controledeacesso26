@@ -8,6 +8,15 @@ namespace ControleDeAcesso26.API.Controllers
 {
     public class BiometriaUsuarioController : ControleDeAcesso26ControllerBase
     {
+        [HttpGet]
+        [ProducesResponseType(typeof(List<ResponseListarBiometriasUsuarioJson>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ListarBiometrias([FromServices] IListarBiometriasUseCase listarBiometriasUseCase,
+                                                           [FromQuery] int? idUsuario = null, [FromQuery] int paginaAtual = 1)
+        {
+            var listaDeBiometriasResult = await listarBiometriasUseCase.Execute(idUsuario, paginaAtual);
+            return Ok(listaDeBiometriasResult);
+        }
+
         [HttpPost("{idUsuario}/cadastrar")]
         [ProducesResponseType(typeof(ResponseCadastrarBiometriaUsuarioJson), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ResponseErrorJson))]

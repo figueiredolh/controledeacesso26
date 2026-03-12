@@ -1,9 +1,12 @@
 using ControleDeAcesso26.API.Filters;
 using ControleDeAcesso26.API.MQTT;
 using ControleDeAcesso26.Application.DependencyInjection;
+using ControleDeAcesso26.Application.MapsterConfiguration;
 using ControleDeAcesso26.Infrastructure.DependencyInjection;
 using ControleDeAcesso26.Infrastructure.Migrations;
+using Mapster;
 using Scalar.AspNetCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,8 @@ builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ExceptionsFilter>();
 });
+
+TypeAdapterConfig.GlobalSettings.Scan(typeof(MappingConfig).Assembly);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
