@@ -1,9 +1,6 @@
 ﻿using ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases;
 using ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ControleDeAcesso26.Application.DependencyInjection.AddDIEntityUseCases
 {
@@ -13,6 +10,7 @@ namespace ControleDeAcesso26.Application.DependencyInjection.AddDIEntityUseCases
         {
             services.AddScoped<ICadastrarBiometriaUsuarioUseCase, CadastrarBiometriaUsuarioUseCase>();
             services.AddScoped<IExcluirBiometriaUsuarioUseCase, ExcluirBiometriaUsuarioUseCase>();
+            services.AddScoped<IListarBiometriasUseCase, ListarBiometriasUseCase>();
         }
     }
 }
