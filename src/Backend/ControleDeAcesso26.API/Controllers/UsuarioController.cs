@@ -10,7 +10,7 @@ namespace ControleDeAcesso26.API.Controllers
     public class UsuarioController : ControleDeAcesso26ControllerBase
     {
         [HttpGet]
-        [ProducesResponseType(typeof(ResponseRecuperarUsuariosJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<ResponseRecuperarUsuariosJson>), StatusCodes.Status200OK)]
         public async Task<IActionResult> RecuperarUsuarios([FromServices] IRecuperarUsuariosUseCase recuperarUsuariosUseCase,
                                                            [FromQuery] bool incluirInativos = false)
         {
