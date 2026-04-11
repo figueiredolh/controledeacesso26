@@ -107,7 +107,6 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
                 var response = new ResponseCadastrarBiometriaUsuarioJson()
                 {
                     NomeUsuario = usuario.Nome,
-                    UsuarioTemplate = dadosBiometriaUsuarioSensor1.UsuarioTemplate,
                     IdSensor = dadosBiometriaUsuarioSensor1.IdSensor,
                     Status = "Dados biométricos salvos com sucesso!"
                 };
