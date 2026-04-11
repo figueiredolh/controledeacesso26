@@ -40,6 +40,20 @@ namespace ControleDeAcesso26.Infrastructure.DataAccess.Repositories
         {
             return await _dbContext.TemplatesBiometriaUsuario.Include(usuario => usuario.Usuario).AsNoTracking().FirstOrDefaultAsync(template => template.IdSensor1 == idSensor);
         }
+
+        public async Task<bool> UsuarioAtivo(int idSensor, int sensor = 1)
+        {
+            if (sensor == 1)
+            {
+                return await _dbContext.TemplatesBiometriaUsuario.Include(usuario => usuario.Usuario).AsNoTracking()
+                            .AnyAsync(template => template.IdSensor1 == idSensor && template.Usuario.Ativo == true);
+            }
+            else
+            {
+                return await _dbContext.TemplatesBiometriaUsuario.Include(usuario => usuario.Usuario).AsNoTracking()
+                            .AnyAsync(template => template.IdSensor2 == idSensor && template.Usuario.Ativo == true);
+            }
+        }
         //atualização
         //exclusão
         public async Task ExcluirTemplate(int idSensor)
