@@ -1,7 +1,12 @@
-﻿using ControleDeAcesso26.Communication.MQTTCommunication.Topics;
+﻿using ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases;
+using ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases.Interfaces;
+using ControleDeAcesso26.Communication.MQTTCommunication.Payloads.BiometriaUsuario.Verificar;
+using ControleDeAcesso26.Communication.MQTTCommunication.Topics;
 using ControleDeAcesso26.Infrastructure.Messaging.MQTT;
 using Microsoft.Extensions.Options;
 using MQTTnet;
+using System.Text;
+using System.Text.Json;
 
 namespace ControleDeAcesso26.API.MQTT
 {
@@ -34,14 +39,10 @@ namespace ControleDeAcesso26.API.MQTT
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var mqttSubscribeOptions = _mqttClientFactory.CreateSubscribeOptionsBuilder()
-                                   .WithTopicFilter(MqttTopics.Teste, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
                                    .WithTopicFilter(MqttTopics.CadastrarBiometriaUsuarioEnviarDadosSensor1, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
                                    .WithTopicFilter(MqttTopics.CadastrarBiometriaUsuarioEnviarDadosSensor1Feedback)
                                    .WithTopicFilter(MqttTopics.ExcluirBiometriaUsuarioEnviarDadosSensor1, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
-                                   //.WithTopicFilter(MqttTopics.ExcluirBiometriaUsuarioEnviarDadosSensor2)
-                                   //.WithTopicFilter(MqttTopics.CadastrarBiometriaUsuarioEnviarDados, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
-                                   //.WithTopicFilter(MqttTopics.CadastrarRfidUsuario, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
-                                   //.WithTopicFilter(MqttTopics.LeituraRfidUsuario, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
+                                   .WithTopicFilter(MqttTopics.VerificarBiometriaUsuarioSensor1, MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce)
                                    .Build();
 
             _mqttClient.DisconnectedAsync += async e =>
@@ -76,19 +77,20 @@ namespace ControleDeAcesso26.API.MQTT
                     {
                         using var scope = _serviceScope.CreateScope();
                         var topic = e.ApplicationMessage.Topic;
-                        //var payload = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
+                        var payload = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
 
-                        /*switch (topic)
+                        switch (topic)
                         {
-                            case MqttTopics.LeituraRfidUsuario:
-                                var payloadDeserialized = JsonSerializer.Deserialize<MqttLeituraUsuarioRfidPayload>(payload)!;
-                                var useCase = scope.ServiceProvider.GetRequiredService<IMqttLeituraRfidUsuarioUseCase>();
+                            case MqttTopics.VerificarBiometriaUsuarioSensor1:
+                                var payloadDeserialized = JsonSerializer.Deserialize<MqttVerificarBiometriaUsuarioReceivedPayloadJson>(payload)!;
+                                var useCase = scope.ServiceProvider.GetRequiredService<IVerificarBiometriaUsuarioUseCase>();
 
-                                await useCase.Execute(payloadDeserialized);
+                                await useCase.Execute(payloadDeserialized, MqttTopics.VerificarBiometriaUsuarioSensor1);
                                 break;
                             default:
                                 break;
-                        };*/
+                        }
+                        ;
                     };
 
                     if (!await _mqttClient.TryPingAsync()) //verifica se um pequeno pacote de controle (PINGREQ) não chega ao broker
