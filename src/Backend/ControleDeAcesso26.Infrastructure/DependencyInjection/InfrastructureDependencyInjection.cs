@@ -1,9 +1,12 @@
-﻿using ControleDeAcesso26.Infrastructure.DataAccess.DatabaseContext;
+﻿using ControleDeAcesso26.Domain.Interfaces.IMqtt;
+using ControleDeAcesso26.Infrastructure.DataAccess.DatabaseContext;
 using ControleDeAcesso26.Infrastructure.DependencyInjection.AddDIEntityRepository;
+using ControleDeAcesso26.Infrastructure.Messaging.MQTT;
 using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MQTTnet;
 
 namespace ControleDeAcesso26.Infrastructure.DependencyInjection
 {
@@ -12,6 +15,7 @@ namespace ControleDeAcesso26.Infrastructure.DependencyInjection
         public static void AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
         {
             AddDatabaseContext(services, configuration);
+            AddMqtt(services, configuration);
             AddRepositories(services);
             AddMigrationServices(services);
         }
@@ -32,11 +36,40 @@ namespace ControleDeAcesso26.Infrastructure.DependencyInjection
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));*/
         }
 
+        private static void AddMqtt(IServiceCollection services, IConfiguration configuration)
+        {
+            //MqttSettings - Microsoft.Extensions.Options.ConfigurationExtensions
+            var brokerSelected = configuration.GetValue<int>("MqttBroker");
+
+            if (brokerSelected == MqttBrokers.HiveMQ)
+            {
+                services.Configure<MqttSettings>(configuration.GetSection("MqttSettingsHiveMQ"));
+            }
+            else if (brokerSelected == MqttBrokers.Mosquitto)
+            {
+                services.Configure<MqttSettings>(configuration.GetSection("MqttSettingsMosquitto"));
+            }           
+
+            //MqttFactory
+            services.AddSingleton<MqttClientFactory>();
+
+            //IMqttClient
+            services.AddSingleton<IMqttClient>(serviceProvider =>
+            {
+                var factory = serviceProvider.GetService<MqttClientFactory>();
+                return factory!.CreateMqttClient();
+            });
+
+            services.AddScoped(typeof(IMqttHandler<>), typeof(MqttMessageHandler<>));
+            services.AddScoped(typeof(IMqttPublisher<>), typeof(MqttMessagePublisher<>));
+        }
+
         private static void AddRepositories(IServiceCollection services)
         {
             DIUnitOfWork.Add(services);
             DIUsuarioRepository.Add(services);
-        }
+            DITemplateBiometriaUsuarioRepository.Add(services);
+        }      
 
         private static void AddMigrationServices(IServiceCollection services)
         {

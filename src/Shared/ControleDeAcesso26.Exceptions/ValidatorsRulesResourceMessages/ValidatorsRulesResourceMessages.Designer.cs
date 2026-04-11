@@ -62,6 +62,15 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Erro ao se comunicar com o banco de dados.
+        /// </summary>
+        public static string ERRO_CADASTRO_BIOMETRIA_BANCO {
+            get {
+                return ResourceManager.GetString("ERRO_CADASTRO_BIOMETRIA_BANCO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Erro desconhecido.
         /// </summary>
         public static string ERRO_DESCONHECIDO {
@@ -71,11 +80,101 @@ namespace ControleDeAcesso26.Exceptions.ValidatorsRulesResourceMessages {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Este usuário possui biometrias cadastradas. É necessário excluí-las antes..
+        /// </summary>
+        public static string ERRO_USUARIO_BIOMETRIAS_ASSOCIADAS {
+            get {
+                return ResourceManager.GetString("ERRO_USUARIO_BIOMETRIAS_ASSOCIADAS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Sem alterações. Falha na requisição.
         /// </summary>
         public static string SEM_ALTERACOES_FALHA {
             get {
                 return ResourceManager.GetString("SEM_ALTERACOES_FALHA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O sensor não enviou os dados a tempo.
+        /// </summary>
+        public static string SENSOR_TIMEOUT {
+            get {
+                return ResourceManager.GetString("SENSOR_TIMEOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Falha ao excluir template no sensor.
+        /// </summary>
+        public static string SENSOR1_ERRO_EXCLUIR_TEMPLATE {
+            get {
+                return ResourceManager.GetString("SENSOR1_ERRO_EXCLUIR_TEMPLATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Falha ao salvar template no sensor.
+        /// </summary>
+        public static string SENSOR1_ERRO_SALVAR_TEMPLATE {
+            get {
+                return ResourceManager.GetString("SENSOR1_ERRO_SALVAR_TEMPLATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O limite de tentativas foi atingido.
+        /// </summary>
+        public static string SENSOR1_LIMITE_TENTATIVA {
+            get {
+                return ResourceManager.GetString("SENSOR1_LIMITE_TENTATIVA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O sensor principal está ocupado no momento.
+        /// </summary>
+        public static string SENSOR1_OCUPADO {
+            get {
+                return ResourceManager.GetString("SENSOR1_OCUPADO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Operação cancelada pelo usuário.
+        /// </summary>
+        public static string SENSOR1_OPERACAO_CANCELADA {
+            get {
+                return ResourceManager.GetString("SENSOR1_OPERACAO_CANCELADA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A posição de memória do sensor principal nessa posição já foi gravada/utilizada.
+        /// </summary>
+        public static string SENSOR1_POSICAO_MEMORIA_UTILIZADA {
+            get {
+                return ResourceManager.GetString("SENSOR1_POSICAO_MEMORIA_UTILIZADA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Todos os slots da memória do sensor principal estão ocupados.
+        /// </summary>
+        public static string SENSOR1_SLOTS_OCUPADOS {
+            get {
+                return ResourceManager.GetString("SENSOR1_SLOTS_OCUPADOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Template relacionado a este id não se encontra na base de dados.
+        /// </summary>
+        public static string TEMPLATE_NAO_ENCONTRADO_BANCO {
+            get {
+                return ResourceManager.GetString("TEMPLATE_NAO_ENCONTRADO_BANCO", resourceCulture);
             }
         }
         

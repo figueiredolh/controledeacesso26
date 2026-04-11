@@ -193,3 +193,10 @@ FakesAssemblies/
 
 /.sonarqube
 coverage.opencover.xml
+
+#.NET API - arquivos de configuração
+
+appsettings.json
+appsettings.local.json
+appsettings.Development.json
+appsettings.*.json

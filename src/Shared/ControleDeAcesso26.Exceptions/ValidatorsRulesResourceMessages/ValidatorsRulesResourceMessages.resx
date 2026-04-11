@@ -150,4 +150,37 @@
   <data name="USUARIO_NOME_VAZIO" xml:space="preserve">
     <value>O nome do usuário não pode estar vazio</value>
   </data>
+  <data name="SENSOR1_POSICAO_MEMORIA_UTILIZADA" xml:space="preserve">
+    <value>A posição de memória do sensor principal nessa posição já foi gravada/utilizada</value>
+  </data>
+  <data name="SENSOR_TIMEOUT" xml:space="preserve">
+    <value>O sensor não enviou os dados a tempo</value>
+  </data>
+  <data name="SENSOR1_OCUPADO" xml:space="preserve">
+    <value>O sensor principal está ocupado no momento</value>
+  </data>
+  <data name="SENSOR1_LIMITE_TENTATIVA" xml:space="preserve">
+    <value>O limite de tentativas foi atingido</value>
+  </data>
+  <data name="SENSOR1_SLOTS_OCUPADOS" xml:space="preserve">
+    <value>Todos os slots da memória do sensor principal estão ocupados</value>
+  </data>
+  <data name="ERRO_USUARIO_BIOMETRIAS_ASSOCIADAS" xml:space="preserve">
+    <value>Este usuário possui biometrias cadastradas. É necessário excluí-las antes.</value>
+  </data>
+  <data name="ERRO_CADASTRO_BIOMETRIA_BANCO" xml:space="preserve">
+    <value>Erro ao se comunicar com o banco de dados</value>
+  </data>
+  <data name="SENSOR1_OPERACAO_CANCELADA" xml:space="preserve">
+    <value>Operação cancelada pelo usuário</value>
+  </data>
+  <data name="SENSOR1_ERRO_SALVAR_TEMPLATE" xml:space="preserve">
+    <value>Falha ao salvar template no sensor</value>
+  </data>
+  <data name="SENSOR1_ERRO_EXCLUIR_TEMPLATE" xml:space="preserve">
+    <value>Falha ao excluir template no sensor</value>
+  </data>
+  <data name="TEMPLATE_NAO_ENCONTRADO_BANCO" xml:space="preserve">
+    <value>Template relacionado a este id não se encontra na base de dados</value>
+  </data>
 </root>

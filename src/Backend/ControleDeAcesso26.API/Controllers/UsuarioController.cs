@@ -10,7 +10,7 @@ namespace ControleDeAcesso26.API.Controllers
     public class UsuarioController : ControleDeAcesso26ControllerBase
     {
         [HttpGet]
-        [ProducesResponseType(typeof(ResponseRecuperarUsuariosJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<ResponseRecuperarUsuariosJson>), StatusCodes.Status200OK)]
         public async Task<IActionResult> RecuperarUsuarios([FromServices] IRecuperarUsuariosUseCase recuperarUsuariosUseCase,
                                                            [FromQuery] bool incluirInativos = false)
         {
@@ -58,7 +58,7 @@ namespace ControleDeAcesso26.API.Controllers
             return Ok(usuarioDeleteResult);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [ProducesResponseType(typeof(ResponseExcluirUsuarioDefinitivamenteJson), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ResponseErrorJson))]
         public async Task<IActionResult> ExcluirUsuarioDefinitivamente(long id, [FromServices] IExcluirUsuarioDefinitivamenteUseCase excluirDefUsuarioUseCase)
