@@ -11,6 +11,7 @@ namespace ControleDeAcesso26.Application.DependencyInjection.AddDIEntityUseCases
             services.AddScoped<ICadastrarBiometriaUsuarioUseCase, CadastrarBiometriaUsuarioUseCase>();
             services.AddScoped<IExcluirBiometriaUsuarioUseCase, ExcluirBiometriaUsuarioUseCase>();
             services.AddScoped<IListarBiometriasUseCase, ListarBiometriasUseCase>();
+            services.AddScoped<IVerificarBiometriaUsuarioUseCase, VerificarBiometriaUsuarioUseCase>();
         }
     }
 }
