@@ -25,7 +25,7 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
         {
             TemplateBiometriaUsuario? templateBiometriaUsuario = null!;
             
-            string acao = payload.Sensor.Equals(1) ? "S" : "E"; //S - Saída; E - Entrada
+            //string acao = payload.Sensor.Equals(1) ? "S" : "E"; //S - Saída; E - Entrada
             DateTime horarioAtual = DateTime.Now;
             
             //verificar se usuário com o respectivo id do sensor está ativo
@@ -68,7 +68,7 @@ namespace ControleDeAcesso26.Application.UseCases.BiometriaUsuarioUseCases
             var payloadAbrirPorta = new MqttAbrirPortaPublishPayloadJson()
             {
                 NomeUsuario = nomeUsuario,
-                Acao = acao,
+                Acao = "E",
                 Horario = horarioAtual
             };
 
