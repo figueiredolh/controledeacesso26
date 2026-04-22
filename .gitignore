@@ -196,7 +196,15 @@ coverage.opencover.xml
 
 #.NET API - arquivos de configuração
 
-appsettings.json
-appsettings.local.json
-appsettings.Development.json
-appsettings.*.json
+src/Backend/ControleDeAcesso26.API/appsettings.json
+src/Backend/ControleDeAcesso26.API/appsettings.local.json
+src/Backend/ControleDeAcesso26.API/appsettings.Development.json
+src/Backend/ControleDeAcesso26.API/appsettings.*.json
+
+#Arquivos docker
+
+docker/
+.dockerignore
+.env.*
+compose.yaml
+Dockerfile
