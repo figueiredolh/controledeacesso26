@@ -2,7 +2,7 @@
 
 namespace ControleDeAcesso26.API.Controllers.Base
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ControleDeAcesso26ControllerBase : ControllerBase
     {
