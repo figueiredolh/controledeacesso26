@@ -1,0 +1,13 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  name: Default
+
+steps:
+- script: |
+    cd /opt/projetos/controledeacesso26
+    git pull
+    docker compose --env-file .env.prod up -d --build
