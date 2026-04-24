@@ -7,7 +7,7 @@ pool:
   name: Default
 
 steps:
-- script: |
-    cd /opt/projetos/controledeacesso26
-    git pull
-    docker compose --env-file .env.prod up -d --build
+  - script: |
+      cd /opt/projetos/ControleDeAcesso26
+      git pull
+      docker compose --env-file .env.prod up -d --build
