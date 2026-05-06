@@ -8,5 +8,6 @@ namespace ControleDeAcesso26.Domain.Interfaces.ITemplateBiometriaUsuario
         public Task<bool> IdSensor1JaExiste(int idSensor);
         public Task<TemplateBiometriaUsuario?> BuscarTemplatePorId(int idSensor);
         public Task<bool> UsuarioAtivo(int idSensor, int sensor = 1);
+        public Task<int> TotalRegistrosTemplates();
     }
 }

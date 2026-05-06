@@ -34,5 +34,14 @@ namespace ControleDeAcesso26.API.Controllers
             var result = await useCase.Execute(idSensor);
             return Ok(result);
         }
+
+        [HttpDelete("limparDatabase")]
+        [ProducesResponseType(typeof(ResponseLimparDatabaseBiometriaUsuarioJson), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ResponseErrorJson))]
+        public async Task<IActionResult> LimparDatabaseBiometria(string palavraConfirmacao, [FromServices] ILimparDatabaseBiometriaUsuarioUseCase useCase)
+        {
+            await useCase.Execute(palavraConfirmacao);
+            return Ok();
+        }
     }
 }
