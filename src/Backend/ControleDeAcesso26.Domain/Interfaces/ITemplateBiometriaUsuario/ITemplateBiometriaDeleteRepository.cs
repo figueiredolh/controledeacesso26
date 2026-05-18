@@ -3,5 +3,6 @@
     public interface ITemplateBiometriaDeleteRepository
     {
         public Task ExcluirTemplate(int idSensor);
+        public Task LimparDatabase();
     }
 }

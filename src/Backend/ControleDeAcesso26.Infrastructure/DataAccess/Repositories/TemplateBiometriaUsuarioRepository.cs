@@ -54,11 +54,21 @@ namespace ControleDeAcesso26.Infrastructure.DataAccess.Repositories
                             .AnyAsync(template => template.IdSensor2 == idSensor && template.Usuario.Ativo == true);
             }
         }
+
+        public async Task<int> TotalRegistrosTemplates()
+        {
+            return await _dbContext.TemplatesBiometriaUsuario.AsNoTracking().CountAsync();
+        }
         //atualização
         //exclusão
         public async Task ExcluirTemplate(int idSensor)
         {
             await _dbContext.TemplatesBiometriaUsuario.Where(template => template.IdSensor1 == idSensor).ExecuteDeleteAsync();
+        }
+
+        public async Task LimparDatabase()
+        {
+            await _dbContext.TemplatesBiometriaUsuario.AsNoTracking().ExecuteDeleteAsync();
         }
     }
 }
