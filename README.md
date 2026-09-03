@@ -1,5 +1,5 @@
 <h1>Sistema de Controle de Acesso para Residências - Atualização</h1>
-<p>Repositório público para demonstração técnica de portfólio. Este projeto é uma evolução de uma solução de automação/IoT desenvolvida originalmente em Node.js (2021), agora totalmente reestruturada no ecossistema .NET para garantir alta performance, escalabilidade e adoção de boas práticas de Engenharia de Software. Junto ao .NET, tem-se a utilização do MySQL para banco de dados, e conteinerização em Docker, rodando em servidor local</p>
+<p>Repositório público para demonstração técnica de portfólio. Este projeto é uma evolução de uma solução de automação/IoT desenvolvida originalmente em Node.js (2021) (<a href="https://github.com/figueiredolh/AccessControlSystem" target="_blank">link do repositório</a>), agora totalmente reestruturada no ecossistema .NET para garantir alta performance, escalabilidade e adoção de boas práticas de Engenharia de Software. Junto ao .NET, tem-se a utilização do MySQL para banco de dados, e conteinerização em Docker, rodando em servidor local</p>
 <h3>🛠️ Nota de Desenvolvimento:</h3>
 <p>O projeto original é gerenciado ativamente dentro da plataforma Azure DevOps, utilizando Azure Boards (metodologias ágeis) e pipelines. Este repositório no GitHub funciona como um espelho público do que foi e vem sendo desenvolvido por lá</p>
 
