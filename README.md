@@ -8,7 +8,7 @@ atual, trazendo aspectos como a velocidade, o estímulo à criatividade e o conf
 contexto está o advento da Domótica - aliado ao conceito de IoT, em que dispositivos são
 integrados para a satisfação das necessidades básicas de segurança, comunicação, gestão
 energética e conforto de uma habitação.</p>
-<p>O projeto em questão visa desenvolver um sistema de controle de acesso, utilizando componentes de baixo custo, via Biometria, para ambientes residenciais, em que se utilizará uma interface gráfica para gerenciamento. Além disso, o projeto conta com o desenvolvimento do hardware embarcado, também ainda em desenvolvimento, que se encontra neste repositório: <a href="https://github.com/figueiredolh/AccessControlSystem-Hardware" target="_blank">Repositório Hardware/ESP32</a>.</p>
+<p>O projeto em questão visa desenvolver um sistema de controle de acesso, utilizando componentes de baixo custo, via Biometria, para ambientes residenciais, em que se utilizará uma interface gráfica para gerenciamento.</p>
 
 <h2>Funcionamento Básico do Sistema</h2>
 <p>O projeto tem como objetivo fazer a integração de
