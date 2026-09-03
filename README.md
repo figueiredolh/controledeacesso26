@@ -26,3 +26,6 @@ energética e conforto de uma habitação.</p>
   <li>Infraestrutura: Docker (Conteinerização do ambiente de desenvolvimento e banco de dados em servidor local</li>  
   <li>Gestão e Versionamento: Azure DevOps (Repositório original, Git e gerenciamento de tarefas)</li>  
 </ul>
+
+<h2>🔒 Termos de Uso (Licença)</h2>
+<p>Copyright (c) 2026. Todos os direitos reservados. Este código foi desenvolvido e publicado exclusivamente como projeto de portfólio pessoal e para avaliação de competências técnicas em processos seletivos. Não é permitida a reprodução, distribuição, modificação ou uso comercial deste software, no todo ou em parte, sem autorização prévia.</p>
